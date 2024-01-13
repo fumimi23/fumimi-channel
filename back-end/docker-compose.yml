@@ -12,9 +12,11 @@ services:
       MYSQL_PASSWORD: mysqlpass
     volumes:
       - db_data:/var/lib/mysql
+      - ./initdb.d:/docker-entrypoint-initdb.d
     ports:
       - 3306:3306
     tty: true
+    command: mysqld --innodb_use_native_aio=0
 
   api:
     depends_on:
