@@ -7,5 +7,11 @@ export default defineConfig({
   plugins: [react(), Pages()],
   server: {
     port: 2333,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:23323',
+        changeOrigin: true,
+      },
+    },
   },
 })

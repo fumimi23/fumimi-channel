@@ -6,14 +6,14 @@ app = FastAPI()
 
 
 # スレッド一覧取得
-@app.get("/threads")
+@app.get("/api/threads")
 def get_threads():
     threads = session.query(ThreadTable).all()
     return threads
 
 
 # スレッド作成
-@app.post("/threads")
+@app.post("/api/threads")
 def create_thread(title: str):
     thread = ThreadTable(title=title)
     session.add(thread)
@@ -22,14 +22,14 @@ def create_thread(title: str):
 
 
 # 投稿一覧取得
-@app.get("/threads/{thread_id}/posts")
+@app.get("/api/threads/{thread_id}/posts")
 def get_posts(thread_id: int):
     posts = session.query(PostTable).filter(PostTable.thread_id == thread_id).all()
     return posts
 
 
 # 投稿作成
-@app.post("/threads/{thread_id}/posts")
+@app.post("/api/threads/{thread_id}/posts")
 def create_post(thread_id: int, name: str, email: str, message: str):
     post = PostTable(
         name=name,
