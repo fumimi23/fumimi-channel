@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
 from db import session
 from model import ThreadTable, PostTable
 
@@ -12,10 +13,14 @@ def get_threads():
     return threads
 
 
+class Thread(BaseModel):
+    title: str
+
+
 # スレッド作成
 @app.post("/api/threads")
-def create_thread(title: str):
-    thread = ThreadTable(title=title)
+def create_thread(thread: Thread):
+    thread = ThreadTable(title=thread.title)
     session.add(thread)
     session.commit()
     return thread
@@ -28,13 +33,19 @@ def get_posts(thread_id: int):
     return posts
 
 
+class Post(BaseModel):
+    name: str
+    email: str
+    message: str
+
+
 # 投稿作成
 @app.post("/api/threads/{thread_id}/posts")
-def create_post(thread_id: int, name: str, email: str, message: str):
+def create_post(thread_id: int, post: Post):
     post = PostTable(
-        name=name,
-        email=email,
-        message=message,
+        name=post.name,
+        email=post.email,
+        message=post.message,
         thread_id=thread_id,
     )
     session.add(post)
