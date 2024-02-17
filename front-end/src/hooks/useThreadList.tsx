@@ -1,14 +1,6 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import useSWR from 'swr'
 
 export const useThreadList = () => {
-  const [threadList, setThreadList] = useState<Thread[]>([]);
-
-  useEffect(() => {
-    axios.get<Thread[]>('/api/threads').then((res) => {
-      setThreadList(res.data);
-    });
-  }, []);
-
-  return { threadList };
+  const { data, error, mutate } = useSWR('/api/threads', (url): Promise<Thread[]> => fetch(url).then(r => r.json()))
+  return { data, error, isLoading: !error && !data, mutate }
 };
