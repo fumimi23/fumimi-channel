@@ -2,6 +2,7 @@
   "name": "fumimi-channel",
   "private": true,
   "version": "0.0.0",
+  "packageManager": "yarn@4.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
