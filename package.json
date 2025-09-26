@@ -1,0 +1,10 @@
+{
+	"name": "fumimi-channel",
+	"scripts": {
+		"lint": "xo",
+		"format": "xo --fix"
+	},
+	"devDependencies": {
+		"xo": "^1.2.2"
+	}
+}
