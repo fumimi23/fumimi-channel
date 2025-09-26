@@ -8,7 +8,8 @@
     "vscode": {
       "extensions": [
         "exiasr.hadolint",
-        "dbaeumer.vscode-eslint",
+        "EditorConfig.EditorConfig",
+        "samverschueren.linter-xo",
         "Prisma.prisma",
         "eamodio.gitlens",
         "github.copilot",
@@ -17,14 +18,15 @@
         "oderwat.indent-rainbow"
       ],
       "settings": {
-        "[javascript][typescript]": {
+        "xo.enable": true,
+        "xo.format.enable": true,
+        "[javascript][typescript][typescriptreact][json][yaml][markdown]": {
           "editor.codeActionsOnSave": {
-            "source.fixAll.eslint": "explicit"
+            "source.fixAll.xo": "explicit"
           },
-          "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+          "editor.defaultFormatter": "samverschueren.linter-xo",
           "editor.formatOnSave": true
         },
-        "eslint.format.enable": true,
         "[prisma]": {
           "editor.defaultFormatter": "Prisma.prisma"
         },
