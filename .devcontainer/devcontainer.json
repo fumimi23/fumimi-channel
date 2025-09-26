@@ -3,6 +3,7 @@
   "dockerComposeFile": ["compose.yaml"],
   "service": "devcontainer",
   "workspaceFolder": "/workspaces/fumimi-channel",
+  "postCreateCommand": ".devcontainer/postCreateCommand.sh",
   "customizations": {
     "vscode": {
       "extensions": [
