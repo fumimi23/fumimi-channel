@@ -1,0 +1,10 @@
+services:
+  devcontainer:
+    build: ./
+    command: sleep infinity
+    volumes:
+      - type: bind
+        source: ../
+        target: /workspaces/fumimi-channel
+        consistency: cached
+    init: true
