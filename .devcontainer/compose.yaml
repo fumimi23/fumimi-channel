@@ -1,12 +1,10 @@
 services:
   devcontainer:
-    build:
-      context: ..
-      dockerfile: .devcontainer/Dockerfile
+    build: ./.devcontainer
     command: sleep infinity
     volumes:
       - type: bind
-        source: ../
+        source: .
         target: /workspaces/fumimi-channel
         consistency: cached
     init: true

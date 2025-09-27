@@ -1,6 +1,6 @@
 {
   "name": "Fumimi Channel",
-  "dockerComposeFile": ["compose.yaml"],
+  "dockerComposeFile": ["../compose.yaml", "compose.yaml"],
   "service": "devcontainer",
   "workspaceFolder": "/workspaces/fumimi-channel",
   "postCreateCommand": ".devcontainer/postCreateCommand.sh",
