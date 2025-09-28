@@ -1,0 +1,16 @@
+{
+  "name": "@repo/database",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "scripts": {
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev"
+  },
+  "devDependencies": {
+    "prisma": "^6.16.2",
+    "typescript": "catalog:"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.16.2"
+  }
+}

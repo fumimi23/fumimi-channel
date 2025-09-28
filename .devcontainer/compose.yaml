@@ -7,4 +7,7 @@ services:
         source: .
         target: /workspaces/fumimi-channel
         consistency: cached
+    environment:
+      - TZ=UTC
+      - DATABASE_URL=postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@db:5432/${DB_NAME:-db}?schema=fumimi_channel
     init: true
