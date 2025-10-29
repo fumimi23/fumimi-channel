@@ -23,14 +23,14 @@ datasource db {
 model Board {
   // key を主キーとする (自然キー)。URL 及び参照用。
   key         String  @id @db.VarChar(64)
-  title       String
+  title       String  @db.VarChar(255)
   description String  @db.Text
   isReadOnly  Boolean @default(false) // true の間は新規スレ・投稿禁止 (閲覧のみ)
 
   threads Thread[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @db.Timestamptz(6)
 }
 
 enum ThreadStatus {
@@ -45,7 +45,7 @@ model Thread {
   id        String       @id @default(uuid()) @db.Uuid
   boardKey  String       @db.VarChar(64)
   board     Board        @relation(fields: [boardKey], references: [key], onDelete: Cascade)
-  title     String
+  title     String       @db.VarChar(255)
   status    ThreadStatus @default(OPEN)
   // bump 用: 非 sage 投稿で手動更新 (サービスロジックで updatedAt = now() 再保存)
   updatedAt DateTime     @default(now()) @db.Timestamptz(6)
@@ -61,33 +61,13 @@ model Thread {
 model Post {
   // uuid v4
   id       String @id @default(uuid()) @db.Uuid
-  threadId String
+  threadId String @db.Uuid
   thread   Thread @relation(fields: [threadId], references: [id], onDelete: Cascade)
 
   body String @db.Text
-
-  attachments Attachment[]
 
   createdAt DateTime @default(now()) @db.Timestamptz(6)
   updatedAt DateTime @updatedAt @db.Timestamptz(6)
 
   @@index([threadId, createdAt])
-}
-
-/// ファイル添付 (画像など)
-model Attachment {
-  id         String   @id @default(cuid())
-  postId     String
-  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  fileName   String
-  mimeType   String
-  size       Int
-  width      Int? // 画像なら
-  height     Int?
-  sha256     String? // 重複排除用
-  storageKey String // オブジェクトストレージキー / パス
-  createdAt  DateTime @default(now())
-
-  @@index([postId])
-  @@index([sha256])
 }
