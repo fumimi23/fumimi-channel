@@ -4,7 +4,9 @@
   "main": "src/index.ts",
   "scripts": {
     "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate dev"
+    "db:migrate-reset": "prisma migrate reset -f",
+    "db:migrate-create": "prisma migrate dev --create-only",
+    "db:migrate-deploy": "prisma migrate deploy"
   },
   "devDependencies": {
     "prisma": "^6.16.2",
