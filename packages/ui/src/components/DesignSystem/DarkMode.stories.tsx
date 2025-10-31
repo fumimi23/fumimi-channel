@@ -1,7 +1,6 @@
 import type { Meta } from '@storybook/react';
 import { Button } from '../atoms/Button';
 import { Input } from '../atoms/Input';
-import { FormField } from '../molecules/FormField';
 import { ThemeToggle } from '../atoms/ThemeToggle';
 
 const meta: Meta = {
@@ -112,27 +111,6 @@ export const Components = () => (
           <Input label="氏名" placeholder="山田 太郎" />
           <Input label="メールアドレス" placeholder="example@example.com" errorText={['メールアドレスの形式が正しくありません。']} />
           <Input label="電話番号" placeholder="03-1234-5678" readOnly value="03-1234-5678" />
-        </div>
-      </section>
-
-      {/* Form Fields */}
-      <section>
-        <h3 style={{ color: 'var(--text-secondary)', marginBottom: '16px', fontSize: '16px' }}>
-          Form Fields
-        </h3>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '400px' }}>
-          <FormField
-            label="メールアドレス"
-            inputProps={{ label: 'メールアドレス', type: 'email', placeholder: 'example@example.com', supportText: '登録済みのメールアドレスを入力してください' }}
-          />
-          <FormField
-            label="パスワード"
-            inputProps={{ label: 'パスワード', type: 'password', placeholder: '8文字以上', required: true }}
-          />
-          <FormField
-            label="確認コード"
-            inputProps={{ label: '確認コード', type: 'text', value: '123', errorText: ['無効な確認コードです'] }}
-          />
         </div>
       </section>
 
