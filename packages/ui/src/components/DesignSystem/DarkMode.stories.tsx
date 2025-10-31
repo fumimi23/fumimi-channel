@@ -109,9 +109,9 @@ export const Components = () => (
           Inputs
         </h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '400px' }}>
-          <Input placeholder="通常の入力フィールド" />
-          <Input placeholder="エラー状態" error />
-          <Input placeholder="無効状態" disabled />
+          <Input label="氏名" placeholder="山田 太郎" />
+          <Input label="メールアドレス" placeholder="example@example.com" errorText={['メールアドレスの形式が正しくありません。']} />
+          <Input label="電話番号" placeholder="03-1234-5678" disabled />
         </div>
       </section>
 
@@ -123,18 +123,15 @@ export const Components = () => (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '400px' }}>
           <FormField
             label="メールアドレス"
-            inputProps={{ type: 'email', placeholder: 'example@example.com' }}
-            helpText="登録済みのメールアドレスを入力してください"
+            inputProps={{ label: 'メールアドレス', type: 'email', placeholder: 'example@example.com', supportText: '登録済みのメールアドレスを入力してください' }}
           />
           <FormField
             label="パスワード"
-            inputProps={{ type: 'password', placeholder: '8文字以上' }}
-            required
+            inputProps={{ label: 'パスワード', type: 'password', placeholder: '8文字以上', required: true }}
           />
           <FormField
             label="確認コード"
-            inputProps={{ type: 'text', value: '123' }}
-            errorMessage="無効な確認コードです"
+            inputProps={{ label: '確認コード', type: 'text', value: '123', errorText: ['無効な確認コードです'] }}
           />
         </div>
       </section>
