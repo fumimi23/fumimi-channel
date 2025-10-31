@@ -1,0 +1,113 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-medium);
+  transition: all var(--transition-base);
+  cursor: pointer;
+  outline: none;
+  box-shadow: var(--shadow-sm);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-primary) 20%, transparent);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Variants */
+.primary {
+  background-color: var(--color-primary);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-base);
+}
+
+.primary:hover:not(:disabled) {
+  background-color: var(--color-primary-hover);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.primary:active:not(:disabled) {
+  background-color: var(--color-primary-active);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(0);
+}
+
+.secondary {
+  background-color: var(--surface-default);
+  color: var(--text-primary);
+  border: 2px solid var(--border-default);
+  box-shadow: var(--shadow-sm);
+}
+
+.secondary:hover:not(:disabled) {
+  background-color: var(--surface-hover);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-base);
+}
+
+.secondary:active:not(:disabled) {
+  background-color: var(--surface-active);
+  box-shadow: none;
+}
+
+.danger {
+  background-color: var(--color-danger);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-base);
+}
+
+.danger:hover:not(:disabled) {
+  background-color: var(--color-error-600);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.danger:active:not(:disabled) {
+  background-color: var(--color-error-700);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(0);
+}
+
+.outline {
+  background-color: transparent;
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+.outline:hover:not(:disabled) {
+  background-color: var(--surface-hover);
+  border-color: var(--color-primary-hover);
+  color: var(--color-primary-hover);
+}
+
+.outline:active:not(:disabled) {
+  background-color: var(--surface-active);
+}
+
+/* Sizes */
+.sm {
+  padding: var(--spacing-1) var(--spacing-3);
+  font-size: var(--font-size-sm);
+  min-height: 32px;
+}
+
+.md {
+  padding: var(--spacing-2) var(--spacing-4);
+  font-size: var(--font-size-base);
+  min-height: 40px;
+}
+
+.lg {
+  padding: var(--spacing-3) var(--spacing-6);
+  font-size: var(--font-size-lg);
+  min-height: 48px;
+}
