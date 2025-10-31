@@ -1,0 +1,161 @@
+/* ============================================
+   Breadcrumb Component Styles
+   デジタル庁デザインシステム準拠
+   https://design.digital.go.jp/dads/components/breadcrumb/
+   ============================================ */
+
+/* Breadcrumb Container */
+.breadcrumb {
+  width: 100%;
+  margin: 0;
+  padding: var(--spacing-4) 0;
+}
+
+/* Breadcrumb List */
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: var(--spacing-2);
+}
+
+/* モバイル: 横スクロール仕様 */
+.mobileScroll .list {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.mobileScroll .list::-webkit-scrollbar {
+  height: 4px;
+}
+
+.mobileScroll .list::-webkit-scrollbar-track {
+  background: var(--background-secondary);
+}
+
+.mobileScroll .list::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: var(--radius-full);
+}
+
+.mobileScroll .list::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
+}
+
+/* Breadcrumb Item */
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  white-space: nowrap;
+}
+
+/* モバイル: 改行仕様の場合はホワイトスペースを許可 */
+.mobileWrap .item {
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* Separator (区切り文字) */
+.separator {
+  color: var(--text-tertiary);
+  font-size: var(--font-size-14);
+  user-select: none;
+  flex-shrink: 0;
+}
+
+/* Link */
+.link {
+  color: var(--color-link);
+  text-decoration: none;
+  font-size: var(--font-size-14);
+  line-height: var(--line-height-160);
+  transition: color var(--transition-fast), text-decoration var(--transition-fast);
+}
+
+.link:hover {
+  color: var(--color-link-hover);
+  text-decoration: underline;
+}
+
+.link:visited {
+  color: var(--color-link-visited);
+}
+
+.link:visited:hover {
+  color: var(--color-link-visited-hover);
+}
+
+.link:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Current Page (現在のページ) */
+.current {
+  color: var(--text-primary);
+  font-size: var(--font-size-14);
+  line-height: var(--line-height-160);
+  font-weight: var(--font-weight-bold);
+}
+
+/* タブレット以上: より大きなフォントサイズ */
+@media (min-width: 768px) {
+  .link,
+  .current,
+  .separator {
+    font-size: var(--font-size-16);
+  }
+}
+
+/* デスクトップサイズ: 常に改行仕様 */
+@media (min-width: 1024px) {
+  .breadcrumb .list {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+
+  .breadcrumb .item {
+    white-space: normal;
+    word-break: break-word;
+  }
+}
+
+/* モバイルでの横スクロール時のアイテム */
+@media (max-width: 767px) {
+  .mobileScroll .item {
+    flex-shrink: 0;
+  }
+}
+
+/* Reduced Motion対応 */
+@media (prefers-reduced-motion: reduce) {
+  .link {
+    transition: none;
+  }
+}
+
+/* Print対応 */
+@media print {
+  .breadcrumb {
+    padding: var(--spacing-2) 0;
+  }
+
+  .link {
+    color: var(--text-primary);
+    text-decoration: underline;
+  }
+
+  .link::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.8em;
+    color: var(--text-secondary);
+  }
+}
