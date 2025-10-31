@@ -1,7 +1,7 @@
 import type { Meta } from '@storybook/react';
 import { Button } from '../atoms/Button';
 import { Input } from '../atoms/Input';
-import { ThemeToggle } from '../atoms/ThemeToggle';
+import { ThemeToggle } from '../molecules/ThemeToggle';
 
 const meta: Meta = {
   title: 'Design System/Dark Mode',

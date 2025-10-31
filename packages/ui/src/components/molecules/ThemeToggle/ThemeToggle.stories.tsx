@@ -2,13 +2,13 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { ThemeToggle } from './ThemeToggle';
 
 const meta: Meta<typeof ThemeToggle> = {
-  title: 'Atoms/ThemeToggle',
+  title: 'Molecules/ThemeToggle',
   component: ThemeToggle,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
-        component: 'ライトモード、ダークモード、システム設定を切り替えるトグルボタン。選択したテーマはlocalStorageに保存されます。',
+        component: 'ライトモード、ダークモード、システム設定を切り替えるトグルボタン。3つのボタンで構成される複合コンポーネントです。選択したテーマはlocalStorageに保存されます。',
       },
     },
   },
