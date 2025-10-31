@@ -93,21 +93,24 @@
   background-color: var(--surface-active);
 }
 
-/* Sizes */
+/* Sizes - デジタル庁Onelineスタイル適用 */
 .sm {
   padding: var(--spacing-1) var(--spacing-3);
-  font-size: var(--font-size-sm);
+  font: var(--text-oln-14n-100);
+  letter-spacing: var(--letter-spacing-2);
   min-height: 32px;
 }
 
 .md {
   padding: var(--spacing-2) var(--spacing-4);
-  font-size: var(--font-size-base);
+  font: var(--text-oln-16n-100);
+  letter-spacing: var(--letter-spacing-2);
   min-height: 40px;
 }
 
 .lg {
   padding: var(--spacing-3) var(--spacing-6);
-  font-size: var(--font-size-lg);
+  font: var(--text-oln-17n-100);
+  letter-spacing: var(--letter-spacing-2);
   min-height: 48px;
 }

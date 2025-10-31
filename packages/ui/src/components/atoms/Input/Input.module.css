@@ -39,22 +39,25 @@
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-error) 10%, transparent);
 }
 
-/* Sizes */
+/* Sizes - デジタル庁Denseスタイル適用 */
 .sm {
   padding: var(--spacing-1) var(--spacing-2);
-  font-size: var(--font-size-sm);
+  font: var(--text-dns-14n-130);
+  letter-spacing: var(--letter-spacing-0);
   height: 32px;
 }
 
 .md {
   padding: var(--spacing-2) var(--spacing-3);
-  font-size: var(--font-size-base);
+  font: var(--text-dns-16n-130);
+  letter-spacing: var(--letter-spacing-0);
   height: 40px;
 }
 
 .lg {
   padding: var(--spacing-3) var(--spacing-4);
-  font-size: var(--font-size-lg);
+  font: var(--text-dns-17n-130);
+  letter-spacing: var(--letter-spacing-0);
   height: 48px;
 }
 

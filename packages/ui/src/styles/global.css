@@ -1,5 +1,10 @@
 @import './variables.css';
 
+/* デジタル庁デザインシステム準拠フォント
+   https://design.digital.go.jp/dads/foundations/typography/
+   Google Fonts経由でNoto Sans JPとNoto Sans Monoを読み込み */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+Mono:wght@400;700&display=swap');
+
 *,
 *::before,
 *::after {
@@ -9,9 +14,12 @@
 }
 
 body {
+  /* デジタル庁デザインシステム準拠のタイポグラフィ */
   font-family: var(--font-family-base);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-normal);
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-170);
+  letter-spacing: var(--letter-spacing-2);
   color: var(--text-primary);
   background-color: var(--background-primary);
   -webkit-font-smoothing: antialiased;
@@ -21,6 +29,7 @@ body {
 
 code {
   font-family: var(--font-family-mono);
+  letter-spacing: var(--letter-spacing-0);
 }
 
 button {
