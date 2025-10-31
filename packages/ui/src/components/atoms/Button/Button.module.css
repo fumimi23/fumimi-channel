@@ -93,7 +93,7 @@
   background-color: var(--surface-active);
 }
 
-/* Sizes - デジタル庁Onelineスタイル適用 */
+/* Sizes - デジタル庁OneLineスタイル適用 */
 .sm {
   padding: var(--spacing-1) var(--spacing-3);
   font: var(--text-oln-14n-100);

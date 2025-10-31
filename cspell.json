@@ -1,6 +1,8 @@
 {
   "language": "en_US",
   "words": [
+    "autodocs",
+    "circlehollow",
     "dpage",
     "eamodio",
     "exiasr",
@@ -12,6 +14,8 @@
     "pgadmin",
     "pkey",
     "samverschueren",
-    "Timestamptz"
+    "sbdocs",
+    "Timestamptz",
+    "WCAG"
   ]
 }
