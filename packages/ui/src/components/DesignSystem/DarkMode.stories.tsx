@@ -111,7 +111,7 @@ export const Components = () => (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '400px' }}>
           <Input label="氏名" placeholder="山田 太郎" />
           <Input label="メールアドレス" placeholder="example@example.com" errorText={['メールアドレスの形式が正しくありません。']} />
-          <Input label="電話番号" placeholder="03-1234-5678" disabled />
+          <Input label="電話番号" placeholder="03-1234-5678" readOnly value="03-1234-5678" />
         </div>
       </section>
 

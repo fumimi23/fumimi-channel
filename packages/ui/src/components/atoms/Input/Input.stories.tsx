@@ -16,10 +16,6 @@ const meta: Meta<typeof Input> = {
       options: ['sm', 'md', 'lg'],
       description: 'サイズ（sm: 36px, md: 48px, lg: 56px）',
     },
-    disabled: {
-      control: 'boolean',
-      description: '無効化状態（非推奨: 使用を避けてください）',
-    },
     readOnly: {
       control: 'boolean',
       description: '編集不可状態',
@@ -147,15 +143,6 @@ export const ReadOnly: Story = {
     supportText: 'この項目は自動入力されたので変更できません。',
     value: '東京都千代田区霞が関1-2-3',
     readOnly: true,
-  },
-};
-
-// 無効化状態（非推奨）
-export const Disabled: Story = {
-  args: {
-    label: '項目名',
-    value: '無効化状態（非推奨）',
-    disabled: true,
   },
 };
 

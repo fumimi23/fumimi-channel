@@ -1,10 +1,8 @@
 import React from 'react';
-import styles from './Input.module.css';
+import styles from './TextArea.module.css';
 import formControlStyles from '../../../styles/form-control.module.css';
 
-export interface InputProps {
-  /** 入力フィールドのタイプ */
-  type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url';
+export interface TextAreaProps {
   /** 項目ラベル（必須） */
   label: string;
   /** サポートテキスト（入力条件や例を記述） */
@@ -18,11 +16,11 @@ export interface InputProps {
   /** デフォルト値 */
   defaultValue?: string;
   /** 変更時のハンドラー */
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
   /** Blur時のハンドラー */
-  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
   /** Focus時のハンドラー */
-  onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  onFocus?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
   /** 編集不可状態 */
   readOnly?: boolean;
   /** 必須フィールド */
@@ -35,16 +33,21 @@ export interface InputProps {
   id?: string;
   /** 入力フィールドのname属性 */
   name?: string;
-  /** autocomplete属性（アクセシビリティ向上） */
-  autoComplete?: string;
+  /** 行数（初期表示） */
+  rows?: number;
+  /** 最大文字数 */
+  maxLength?: number;
+  /** 文字数カウンター表示 */
+  showCount?: boolean;
+  /** リサイズ可否 */
+  resize?: 'none' | 'vertical' | 'horizontal' | 'both';
   /** aria-describedby（エラー・サポートテキストとの関連付け） */
   'aria-describedby'?: string;
   /** 追加のクラス名 */
   className?: string;
 }
 
-export const Input: React.FC<InputProps> = ({
-  type = 'text',
+export const TextArea: React.FC<TextAreaProps> = ({
   label,
   supportText,
   errorText,
@@ -60,7 +63,10 @@ export const Input: React.FC<InputProps> = ({
   fullWidth = false,
   id,
   name,
-  autoComplete,
+  rows = 4,
+  maxLength,
+  showCount = false,
+  resize = 'vertical',
   'aria-describedby': ariaDescribedby,
   className,
 }) => {
@@ -68,9 +74,9 @@ export const Input: React.FC<InputProps> = ({
   const hasError = errorText && errorText.length > 0;
 
   // ユニークIDの生成
-  const inputId = id || `input-${React.useId()}`;
-  const supportTextId = `${inputId}-support`;
-  const errorTextId = `${inputId}-error`;
+  const textareaId = id || `textarea-${React.useId()}`;
+  const supportTextId = `${textareaId}-support`;
+  const errorTextId = `${textareaId}-error`;
 
   // aria-describedby の構築
   const describedByIds = [
@@ -81,10 +87,11 @@ export const Input: React.FC<InputProps> = ({
     .filter(Boolean)
     .join(' ');
 
-  // 入力フィールドのクラス名を構築
-  const inputClassName = [
-    styles.input,
+  // テキストエリアのクラス名を構築
+  const textareaClassName = [
+    styles.textarea,
     styles[size],
+    styles[`resize-${resize}`],
     hasError ? styles.error : '',
     readOnly ? styles.readOnly : '',
     fullWidth ? styles.fullWidth : '',
@@ -97,6 +104,7 @@ export const Input: React.FC<InputProps> = ({
   const readOnlyTextClassName = [
     formControlStyles.readOnlyText,
     formControlStyles[size],
+    formControlStyles.fullWidth,
     className,
   ]
     .filter(Boolean)
@@ -105,11 +113,36 @@ export const Input: React.FC<InputProps> = ({
   // 要否ラベルを自動設定
   const displayRequirementLabel = readOnly ? '編集不可' : required ? '※必須' : undefined;
 
+  // 現在の文字数を計算
+  const currentLength = (value || defaultValue || '').length;
+  const isOverLimit = maxLength ? currentLength > maxLength : false;
+
+  // 文字数カウンターテキスト
+  const getCounterText = () => {
+    if (!showCount && !maxLength) return null;
+    
+    if (maxLength) {
+      if (isOverLimit) {
+        const overCount = currentLength - maxLength;
+        return `${maxLength}文字まで（${overCount}文字オーバー）`;
+      }
+      return `${currentLength}/${maxLength}`;
+    }
+    
+    if (showCount) {
+      return `${currentLength}文字`;
+    }
+    
+    return null;
+  };
+
+  const counterText = getCounterText();
+
   return (
     <div className={`${formControlStyles.container} ${fullWidth ? formControlStyles.containerFullWidth : ''}`}>
       {/* 項目ラベルと要否ラベル */}
       <div className={formControlStyles.labelWrapper}>
-        <label htmlFor={inputId} className={formControlStyles.label}>
+        <label htmlFor={textareaId} className={formControlStyles.label}>
           {label}
         </label>
         {displayRequirementLabel && (
@@ -132,15 +165,14 @@ export const Input: React.FC<InputProps> = ({
 
       {/* 入力フィールド - 編集不可の場合はpタグで表示 */}
       {readOnly ? (
-        <p id={inputId} className={readOnlyTextClassName}>
+        <p id={textareaId} className={readOnlyTextClassName}>
           {value || defaultValue || ''}
         </p>
       ) : (
-        <input
-          id={inputId}
-          type={type}
+        <textarea
+          id={textareaId}
           name={name}
-          className={inputClassName}
+          className={textareaClassName}
           placeholder={placeholder}
           value={value}
           defaultValue={defaultValue}
@@ -149,11 +181,19 @@ export const Input: React.FC<InputProps> = ({
           onFocus={onFocus}
           readOnly={false}
           required={required}
-          autoComplete={autoComplete}
+          rows={rows}
+          maxLength={maxLength}
           aria-invalid={hasError}
           aria-describedby={describedByIds || undefined}
           aria-required={required}
         />
+      )}
+
+      {/* 文字数カウンター */}
+      {!readOnly && counterText && (
+        <div className={`${styles.counter} ${isOverLimit ? styles.counterError : ''}`}>
+          {counterText}
+        </div>
       )}
 
       {/* エラーテキスト */}
