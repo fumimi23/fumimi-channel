@@ -1,0 +1,427 @@
+:root {
+  /* ============================================
+     デジタル庁デザインシステム準拠のカラーシステム
+     https://design.digital.go.jp/dads/foundations/color/
+     ============================================ */
+
+  /* Base Colors - 固定カラー（モード非依存）
+     ======================================== */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  
+  /* Gray Scale - 明→暗（固定値） */
+  --color-gray-50: #f8f9fa;
+  --color-gray-100: #f1f3f5;
+  --color-gray-200: #e9ecef;
+  --color-gray-300: #dee2e6;
+  --color-gray-400: #ced4da;
+  --color-gray-500: #adb5bd;
+  --color-gray-600: #6c757d;
+  --color-gray-700: #495057;
+  --color-gray-800: #343a40;
+  --color-gray-900: #212529;
+
+  /* Primary Colors - キーカラー（Blue系）
+     ========================================
+     ブランドカラー、主要なアクション、アクティブ状態に使用
+     白背景でコントラスト比 4.5:1以上を確保 */
+  --color-primary-50: #e3f2fd;
+  --color-primary-100: #bbdefb;
+  --color-primary-200: #90caf9;
+  --color-primary-300: #64b5f6;
+  --color-primary-400: #42a5f5;
+  --color-primary: #1976d2;        /* メインプライマリー */
+  --color-primary-600: #1565c0;
+  --color-primary-700: #0d47a1;
+  --color-primary-hover: #0d47a1;  /* ホバー状態 */
+  --color-primary-active: #084395; /* アクティブ状態 */
+
+  /* Secondary Colors - セカンダリーカラー
+     ======================================
+     プライマリーを補完する副次的なアクション */
+  --color-secondary-50: #f5f5f5;
+  --color-secondary-100: #e0e0e0;
+  --color-secondary-200: #bdbdbd;
+  --color-secondary: #757575;
+  --color-secondary-600: #616161;
+  --color-secondary-700: #424242;
+
+  /* Semantic Colors - セマンティックカラー
+     ========================================
+     特定の意味や状態を表すカラー */
+  
+  /* Success - 成功・完了・安全 */
+  --color-success-50: #e8f5e9;
+  --color-success-100: #c8e6c9;
+  --color-success-200: #a5d6a7;
+  --color-success: #2e7d32;        /* 白背景でコントラスト比 4.5:1以上 */
+  --color-success-600: #1b5e20;
+  --color-success-700: #145a1c;
+
+  /* Warning - 警告・注意 */
+  --color-warning-50: #fff8e1;
+  --color-warning-100: #ffecb3;
+  --color-warning-200: #ffe082;
+  --color-warning: #f57c00;        /* オレンジ系 */
+  --color-warning-600: #e65100;
+  --color-warning-700: #d84315;
+
+  /* Error/Danger - エラー・危険・失敗 */
+  --color-error-50: #ffebee;
+  --color-error-100: #ffcdd2;
+  --color-error-200: #ef9a9a;
+  --color-error: #c62828;          /* 白背景でコントラスト比 4.5:1以上 */
+  --color-error-600: #b71c1c;
+  --color-error-700: #a01919;
+  --color-danger: #c62828;         /* エイリアス */
+
+  /* Info - 情報 */
+  --color-info-50: #e1f5fe;
+  --color-info-100: #b3e5fc;
+  --color-info-200: #81d4fa;
+  --color-info: #0288d1;           /* ライトブルー系 */
+  --color-info-600: #01579b;
+  --color-info-700: #014a84;
+
+  /* Link Colors - リンクカラー
+     ============================
+     ウェブの慣習に従った青系と訪問済み紫系 */
+  --color-link: #0077cc;           /* デフォルトリンク */
+  --color-link-hover: #005fa3;
+  --color-link-visited: #800080;   /* 訪問済みリンク（紫） */
+  --color-link-visited-hover: #660066;
+
+  /* Accent Colors - アクセントカラー
+     ==================================
+     特定の要素に注意を引くための補完的なカラー */
+  --color-accent-cyan: #00acc1;
+  --color-accent-green: #43a047;
+  --color-accent-lime: #7cb342;
+  --color-accent-orange: #fb8c00;
+  --color-accent-purple: #8e24aa;
+  --color-accent-magenta: #d81b60;
+
+  /* ============================================
+     Semantic Tokens - テーマ対応のセマンティックトークン
+     ============================================ */
+  
+  /* Background Colors */
+  --background-primary: var(--color-white);
+  --background-secondary: var(--color-gray-50);
+  --background-tertiary: var(--color-gray-100);
+  --background-elevated: var(--color-white);
+  
+  /* Text Colors */
+  --text-primary: var(--color-gray-900);
+  --text-secondary: var(--color-gray-700);
+  --text-tertiary: var(--color-gray-600);
+  --text-disabled: var(--color-gray-400);
+  --text-inverse: var(--color-white);
+  
+  /* Border Colors */
+  --border-default: var(--color-gray-300);
+  --border-strong: var(--color-gray-400);
+  --border-subtle: var(--color-gray-200);
+  
+  /* Surface Colors - コンポーネント背景 */
+  --surface-default: var(--color-white);
+  --surface-hover: var(--color-gray-50);
+  --surface-active: var(--color-gray-100);
+  --surface-disabled: var(--color-gray-100);
+  
+  /* ============================================
+     Typography - デジタル庁デザインシステム準拠
+     https://design.digital.go.jp/dads/foundations/typography/
+     ============================================ */
+
+  /* Font Family - フォントファミリー
+     ==================================
+     デジタル庁推奨: Noto Sans JP (日本語), Noto Sans Mono (等幅) */
+  --font-family-base: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family-mono: 'Noto Sans Mono', monospace;
+  
+  /* Font Size - フォントサイズ
+     ===========================
+     デジタル庁定義のサイズに準拠 */
+  --font-size-14: 0.875rem;   /* 14px - Dense/OneLine (制約がある場合のみ) */
+  --font-size-16: 1rem;       /* 16px - Standard 基準サイズ */
+  --font-size-17: 1.0625rem;  /* 17px - Standard/Dense/OneLine */
+  --font-size-18: 1.125rem;   /* 18px - Standard */
+  --font-size-20: 1.25rem;    /* 20px - Standard */
+  --font-size-22: 1.375rem;   /* 22px - Standard */
+  --font-size-24: 1.5rem;     /* 24px - Standard */
+  --font-size-26: 1.625rem;   /* 26px - Standard */
+  --font-size-28: 1.75rem;    /* 28px - Standard */
+  --font-size-32: 2rem;       /* 32px - Standard */
+  --font-size-36: 2.25rem;    /* 36px - Standard */
+  --font-size-45: 2.8125rem;  /* 45px - Standard */
+  --font-size-48: 3rem;       /* 48px - Display */
+  --font-size-57: 3.5625rem;  /* 57px - Display */
+  --font-size-64: 4rem;       /* 64px - Display */
+  
+  /* Font Weight - フォントウェイト
+     ===============================
+     デジタル庁定義: 400 (Normal/N), 700 (Bold/B) */
+  --font-weight-normal: 400;  /* N */
+  --font-weight-bold: 700;    /* B */
+  
+  /* Letter Spacing - 文字間隔
+     ==========================
+     デジタル庁定義に準拠 */
+  --letter-spacing-0: 0;
+  --letter-spacing-1: 0.01em;  /* 1% - 36px以上 */
+  --letter-spacing-2: 0.02em;  /* 2% - 26px以下、OneLine */
+  
+  /* Line Height - 行の高さ
+     =======================
+     デジタル庁定義の行高 (単位なし数値で実装) */
+  --line-height-100: 1.0;   /* 100% - OneLine (ボタン等) */
+  --line-height-120: 1.2;   /* 120% - Dense (情報量優先) */
+  --line-height-130: 1.3;   /* 130% - Dense */
+  --line-height-140: 1.4;   /* 140% - Display, Standard見出し */
+  --line-height-150: 1.5;   /* 150% - Standard見出し, Mono */
+  --line-height-160: 1.6;   /* 160% - Standard */
+  --line-height-170: 1.7;   /* 170% - Standard本文 */
+  --line-height-175: 1.75;  /* 175% - Standard本文 (負荷軽減) */
+  
+  /* ============================================
+     Text Styles - テキストスタイル定義
+     ============================================
+     命名規則: [Style]-[Size][Weight]-[LineHeight]
+     例: Std-17N-170 = Standard 17px Normal 170%
+     ============================================ */
+  
+  /* Display Styles (Dsp) - ヘッドコピー等
+     ===================================== */
+  /* Display Bold */
+  --text-dsp-64b-140: 700 var(--font-size-64) / var(--line-height-140) var(--font-family-base);
+  --text-dsp-57b-140: 700 var(--font-size-57) / var(--line-height-140) var(--font-family-base);
+  --text-dsp-48b-140: 700 var(--font-size-48) / var(--line-height-140) var(--font-family-base);
+  /* Display Normal */
+  --text-dsp-64n-140: 400 var(--font-size-64) / var(--line-height-140) var(--font-family-base);
+  --text-dsp-57n-140: 400 var(--font-size-57) / var(--line-height-140) var(--font-family-base);
+  --text-dsp-48n-140: 400 var(--font-size-48) / var(--line-height-140) var(--font-family-base);
+  
+  /* Standard Styles (Std) - 見出し・本文
+     ==================================== */
+  /* Standard Bold */
+  --text-std-45b-140: 700 var(--font-size-45) / var(--line-height-140) var(--font-family-base);
+  --text-std-36b-140: 700 var(--font-size-36) / var(--line-height-140) var(--font-family-base);
+  --text-std-32b-150: 700 var(--font-size-32) / var(--line-height-150) var(--font-family-base);
+  --text-std-28b-150: 700 var(--font-size-28) / var(--line-height-150) var(--font-family-base);
+  --text-std-26b-150: 700 var(--font-size-26) / var(--line-height-150) var(--font-family-base);
+  --text-std-24b-150: 700 var(--font-size-24) / var(--line-height-150) var(--font-family-base);
+  --text-std-22b-150: 700 var(--font-size-22) / var(--line-height-150) var(--font-family-base);
+  --text-std-20b-150: 700 var(--font-size-20) / var(--line-height-150) var(--font-family-base);
+  --text-std-18b-160: 700 var(--font-size-18) / var(--line-height-160) var(--font-family-base);
+  --text-std-17b-170: 700 var(--font-size-17) / var(--line-height-170) var(--font-family-base);
+  --text-std-16b-170: 700 var(--font-size-16) / var(--line-height-170) var(--font-family-base);
+  --text-std-16b-175: 700 var(--font-size-16) / var(--line-height-175) var(--font-family-base);
+  /* Standard Normal */
+  --text-std-45n-140: 400 var(--font-size-45) / var(--line-height-140) var(--font-family-base);
+  --text-std-36n-140: 400 var(--font-size-36) / var(--line-height-140) var(--font-family-base);
+  --text-std-32n-150: 400 var(--font-size-32) / var(--line-height-150) var(--font-family-base);
+  --text-std-28n-150: 400 var(--font-size-28) / var(--line-height-150) var(--font-family-base);
+  --text-std-26n-150: 400 var(--font-size-26) / var(--line-height-150) var(--font-family-base);
+  --text-std-24n-150: 400 var(--font-size-24) / var(--line-height-150) var(--font-family-base);
+  --text-std-22n-150: 400 var(--font-size-22) / var(--line-height-150) var(--font-family-base);
+  --text-std-20n-150: 400 var(--font-size-20) / var(--line-height-150) var(--font-family-base);
+  --text-std-18n-160: 400 var(--font-size-18) / var(--line-height-160) var(--font-family-base);
+  --text-std-17n-170: 400 var(--font-size-17) / var(--line-height-170) var(--font-family-base);
+  --text-std-16n-170: 400 var(--font-size-16) / var(--line-height-170) var(--font-family-base);
+  --text-std-16n-175: 400 var(--font-size-16) / var(--line-height-175) var(--font-family-base);
+  
+  /* Dense Styles (Dns) - 情報量優先
+     =============================== */
+  /* Dense Bold */
+  --text-dns-17b-130: 700 var(--font-size-17) / var(--line-height-130) var(--font-family-base);
+  --text-dns-17b-120: 700 var(--font-size-17) / var(--line-height-120) var(--font-family-base);
+  --text-dns-16b-130: 700 var(--font-size-16) / var(--line-height-130) var(--font-family-base);
+  --text-dns-16b-120: 700 var(--font-size-16) / var(--line-height-120) var(--font-family-base);
+  --text-dns-14b-130: 700 var(--font-size-14) / var(--line-height-130) var(--font-family-base);
+  --text-dns-14b-120: 700 var(--font-size-14) / var(--line-height-120) var(--font-family-base);
+  /* Dense Normal */
+  --text-dns-17n-130: 400 var(--font-size-17) / var(--line-height-130) var(--font-family-base);
+  --text-dns-17n-120: 400 var(--font-size-17) / var(--line-height-120) var(--font-family-base);
+  --text-dns-16n-130: 400 var(--font-size-16) / var(--line-height-130) var(--font-family-base);
+  --text-dns-16n-120: 400 var(--font-size-16) / var(--line-height-120) var(--font-family-base);
+  --text-dns-14n-130: 400 var(--font-size-14) / var(--line-height-130) var(--font-family-base);
+  --text-dns-14n-120: 400 var(--font-size-14) / var(--line-height-120) var(--font-family-base);
+
+  /* OneLine Styles (Oln) - UI要素用
+     =============================== */
+  /* OneLine Bold */
+  --text-oln-17b-100: 700 var(--font-size-17) / var(--line-height-100) var(--font-family-base);
+  --text-oln-16b-100: 700 var(--font-size-16) / var(--line-height-100) var(--font-family-base);
+  --text-oln-14b-100: 700 var(--font-size-14) / var(--line-height-100) var(--font-family-base);
+  /* OneLine Normal */
+  --text-oln-17n-100: 400 var(--font-size-17) / var(--line-height-100) var(--font-family-base);
+  --text-oln-16n-100: 400 var(--font-size-16) / var(--line-height-100) var(--font-family-base);
+  --text-oln-14n-100: 400 var(--font-size-14) / var(--line-height-100) var(--font-family-base);
+  
+  /* Mono Styles (Mono) - コード用
+     ============================= */
+  /* Mono Bold */
+  --text-mono-17b-150: 700 var(--font-size-17) / var(--line-height-150) var(--font-family-mono);
+  --text-mono-16b-150: 700 var(--font-size-16) / var(--line-height-150) var(--font-family-mono);
+  --text-mono-14b-150: 700 var(--font-size-14) / var(--line-height-150) var(--font-family-mono);
+  /* Mono Normal */
+  --text-mono-17n-150: 400 var(--font-size-17) / var(--line-height-150) var(--font-family-mono);
+  --text-mono-16n-150: 400 var(--font-size-16) / var(--line-height-150) var(--font-family-mono);
+  --text-mono-14n-150: 400 var(--font-size-14) / var(--line-height-150) var(--font-family-mono);
+  
+  /* Spacing */
+  --spacing-0: 0;
+  --spacing-1: 0.25rem;   /* 4px */
+  --spacing-2: 0.5rem;    /* 8px */
+  --spacing-3: 0.75rem;   /* 12px */
+  --spacing-4: 1rem;      /* 16px */
+  --spacing-5: 1.25rem;   /* 20px */
+  --spacing-6: 1.5rem;    /* 24px */
+  --spacing-8: 2rem;      /* 32px */
+  --spacing-10: 2.5rem;   /* 40px */
+  --spacing-12: 3rem;     /* 48px */
+  --spacing-16: 4rem;     /* 64px */
+  
+  /* Border Radius */
+  --radius-none: 0;
+  --radius-sm: 0.125rem;  /* 2px */
+  --radius-base: 0.25rem; /* 4px */
+  --radius-md: 0.375rem;  /* 6px */
+  --radius-lg: 0.5rem;    /* 8px */
+  --radius-xl: 0.75rem;   /* 12px */
+  --radius-2xl: 1rem;     /* 16px */
+  --radius-full: 9999px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  
+  /* Transitions */
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 200ms ease-in-out;
+  --transition-slow: 300ms ease-in-out;
+  
+  /* Z-index */
+  --z-index-dropdown: 1000;
+  --z-index-sticky: 1020;
+  --z-index-fixed: 1030;
+  --z-index-modal-backdrop: 1040;
+  --z-index-modal: 1050;
+  --z-index-popover: 1060;
+  --z-index-tooltip: 1070;
+}
+
+/* ============================================
+   Dark Mode - ダークモード対応
+   ============================================
+   prefers-color-scheme または [data-theme="dark"] で適用 */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    /* Background Colors - ダークモード */
+    --background-primary: #1a1a1a;
+    --background-secondary: #242424;
+    --background-tertiary: #2e2e2e;
+    --background-elevated: #2e2e2e;
+    
+    /* Text Colors - ダークモード */
+    --text-primary: #f1f3f5;
+    --text-secondary: #dee2e6;
+    --text-tertiary: #adb5bd;
+    --text-disabled: #6c757d;
+    --text-inverse: #212529;
+    
+    /* Border Colors - ダークモード */
+    --border-default: #495057;
+    --border-strong: #6c757d;
+    --border-subtle: #343a40;
+    
+    /* Surface Colors - ダークモード */
+    --surface-default: #242424;
+    --surface-hover: #2e2e2e;
+    --surface-active: #383838;
+    --surface-disabled: #343a40;
+    
+    /* Primary Colors Adjustment - ダークモードで明るく */
+    --color-primary: #42a5f5;
+    --color-primary-hover: #64b5f6;
+    --color-primary-active: #90caf9;
+    
+    /* Semantic Colors Adjustment - ダークモードで明るく */
+    --color-success: #66bb6a;
+    --color-warning: #ffa726;
+    --color-error: #ef5350;
+    --color-danger: #ef5350;
+    --color-info: #29b6f6;
+    
+    /* Link Colors - ダークモード */
+    --color-link: #64b5f6;
+    --color-link-hover: #90caf9;
+    --color-link-visited: #ba68c8;
+    --color-link-visited-hover: #ce93d8;
+    
+    /* Shadows - ダークモード（より強調） */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px -1px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* Manual Dark Mode Toggle - 手動でのダークモード切り替え
+   HTML要素に data-theme="dark" を追加することで有効化 */
+[data-theme='dark'] {
+  /* Background Colors - ダークモード */
+  --background-primary: #1a1a1a;
+  --background-secondary: #242424;
+  --background-tertiary: #2e2e2e;
+  --background-elevated: #2e2e2e;
+  
+  /* Text Colors - ダークモード */
+  --text-primary: #f1f3f5;
+  --text-secondary: #dee2e6;
+  --text-tertiary: #adb5bd;
+  --text-disabled: #6c757d;
+  --text-inverse: #212529;
+  
+  /* Border Colors - ダークモード */
+  --border-default: #495057;
+  --border-strong: #6c757d;
+  --border-subtle: #343a40;
+  
+  /* Surface Colors - ダークモード */
+  --surface-default: #242424;
+  --surface-hover: #2e2e2e;
+  --surface-active: #383838;
+  --surface-disabled: #343a40;
+  
+  /* Primary Colors Adjustment - ダークモードで明るく */
+  --color-primary: #42a5f5;
+  --color-primary-hover: #64b5f6;
+  --color-primary-active: #90caf9;
+  
+  /* Semantic Colors Adjustment - ダークモードで明るく */
+  --color-success: #66bb6a;
+  --color-warning: #ffa726;
+  --color-error: #ef5350;
+  --color-danger: #ef5350;
+  --color-info: #29b6f6;
+  
+  /* Link Colors - ダークモード */
+  --color-link: #64b5f6;
+  --color-link-hover: #90caf9;
+  --color-link-visited: #ba68c8;
+  --color-link-visited-hover: #ce93d8;
+  
+  /* Shadows - ダークモード（より強調） */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px -1px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+}

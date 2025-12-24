@@ -1,0 +1,86 @@
+/* ============================================
+   デジタル庁デザインシステム準拠 インプットテキスト
+   https://design.digital.go.jp/dads/components/input-text/
+   共通スタイルは ../shared/FormControl.module.css を参照
+   ============================================ */
+
+/* 入力フィールド */
+.input {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  outline: none;
+  transition: all var(--transition-base);
+  font-family: var(--font-family-base);
+  color: var(--text-primary);
+  background-color: var(--surface-default);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* プレースホルダー（非推奨だが必要な場合用） */
+.input::placeholder {
+  color: var(--text-tertiary);
+  opacity: 0.6;
+}
+
+/* フォーカス状態 */
+.input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 15%, transparent);
+  background-color: var(--background-primary);
+}
+
+/* ホバー状態 */
+.input:hover:not(:read-only):not(:focus) {
+  border-color: var(--border-strong);
+}
+
+/* 編集不可状態（inputの場合は非推奨） */
+.input.readOnly {
+  border-style: dashed;
+  border-color: var(--border-default);
+  background-color: var(--surface-default);
+  cursor: default;
+}
+
+.input.readOnly:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 15%, transparent);
+}
+
+/* エラー状態 */
+.input.error {
+  border-color: var(--color-error);
+}
+
+.input.error:focus {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-error) 15%, transparent);
+}
+
+/* サイズバリエーション - デジタル庁デザインシステム準拠 */
+
+/* Small: 36px */
+.sm {
+  padding: var(--spacing-2) var(--spacing-3);
+  font: var(--text-dns-16n-130);
+  letter-spacing: var(--letter-spacing-0);
+  height: 36px;
+}
+
+/* Medium: 48px */
+.md {
+  padding: var(--spacing-3) var(--spacing-4);
+  font: var(--text-std-17n-170);
+  letter-spacing: var(--letter-spacing-0);
+  height: 48px;
+}
+
+/* Large: 56px */
+.lg {
+  padding: var(--spacing-4) var(--spacing-4);
+  font: var(--text-std-17n-170);
+  letter-spacing: var(--letter-spacing-0);
+  height: 56px;
+}
+

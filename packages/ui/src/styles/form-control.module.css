@@ -1,0 +1,111 @@
+/* ============================================
+   デジタル庁デザインシステム準拠 フォームコントロール共通スタイル
+   Input / TextArea で共通利用
+   ============================================ */
+
+/* コンテナ */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.containerFullWidth {
+  width: 100%;
+}
+
+/* ラベルラッパー */
+.labelWrapper {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-2);
+}
+
+/* 項目ラベル（必須） */
+.label {
+  font: var(--text-std-16b-170);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+/* 要否ラベル */
+.requirementLabel {
+  font: var(--text-std-16n-170);
+  color: var(--text-secondary);
+}
+
+.requirementLabelRequired {
+  color: var(--color-error);
+  font-weight: var(--font-weight-normal);
+}
+
+.requirementLabelReadOnly {
+  color: var(--text-tertiary);
+}
+
+/* サポートテキスト */
+.supportText {
+  font: var(--text-dns-14n-130);
+  color: var(--text-secondary);
+  margin-top: calc(-1 * var(--spacing-1)); /* ラベルとの間隔調整 */
+}
+
+/* エラーテキスト */
+.errorText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.errorTextItem {
+  font: var(--text-dns-14n-130);
+  color: var(--color-error);
+}
+
+.errorTextItem::before {
+  content: '＊';
+  margin-right: var(--spacing-1);
+}
+
+/* 編集不可テキスト（pタグ） */
+.readOnlyText {
+  margin: 0;
+  padding: var(--spacing-3) var(--spacing-4);
+  border: 1px dashed var(--border-default);
+  border-radius: var(--radius-base);
+  font: var(--text-std-17n-170);
+  letter-spacing: var(--letter-spacing-0);
+  color: var(--text-primary);
+  background-color: var(--surface-default);
+  min-height: 48px;
+  display: flex;
+  align-items: flex-start;
+  box-sizing: border-box;
+  width: 100%;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+/* 編集不可テキストのサイズバリエーション */
+.readOnlyText.sm {
+  padding: var(--spacing-2) var(--spacing-3);
+  font: var(--text-dns-16n-130);
+  min-height: 36px;
+}
+
+.readOnlyText.md {
+  padding: var(--spacing-3) var(--spacing-4);
+  font: var(--text-std-17n-170);
+  min-height: 48px;
+}
+
+.readOnlyText.lg {
+  padding: var(--spacing-4) var(--spacing-4);
+  font: var(--text-std-17n-170);
+  min-height: 56px;
+}
+
+/* フルwidth */
+.fullWidth {
+  width: 100%;
+}
