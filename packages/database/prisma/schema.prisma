@@ -11,6 +11,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  schemas  = ["fumimi_channel"]
 }
 
 // =============================
@@ -31,12 +32,16 @@ model Board {
 
   createdAt DateTime @default(now()) @db.Timestamptz(6)
   updatedAt DateTime @updatedAt @db.Timestamptz(6)
+
+  @@schema("fumimi_channel")
 }
 
 enum ThreadStatus {
   OPEN
   CLOSED
   ARCHIVED
+
+  @@schema("fumimi_channel")
 }
 
 /// スレッド
@@ -55,6 +60,7 @@ model Thread {
 
   @@index([boardKey, updatedAt])
   @@index([status])
+  @@schema("fumimi_channel")
 }
 
 /// 投稿 (レス)
@@ -70,4 +76,5 @@ model Post {
   updatedAt DateTime @updatedAt @db.Timestamptz(6)
 
   @@index([threadId, createdAt])
+  @@schema("fumimi_channel")
 }
