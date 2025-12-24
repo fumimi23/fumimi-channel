@@ -1,0 +1,26 @@
+{
+  "name": "@app/backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Hono API Server for Fumimi Channel",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@repo/database": "workspace:*",
+    "@repo/shared": "workspace:*",
+    "@hono/node-server": "^1.13.7",
+    "@hono/zod-validator": "^0.4.1",
+    "hono": "^4.6.15",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "catalog:"
+  }
+}

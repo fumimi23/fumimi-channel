@@ -1,8 +1,9 @@
 {
   "name": "@repo/database",
   "version": "1.0.0",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "scripts": {
+    "build": "tsc",
     "db:generate": "prisma generate",
     "db:migrate-reset": "prisma migrate reset -f",
     "db:migrate-create": "prisma migrate dev --create-only",
