@@ -37,6 +37,15 @@ services:
         condition: service_healthy
     restart: unless-stopped
 
+  frontend:
+    build:
+      context: .
+      dockerfile: apps/frontend/Dockerfile
+    container_name: frontend
+    ports:
+      - ${FRONTEND_PORT:-4000}:80
+    restart: unless-stopped
+
   pgadmin4:
     image: dpage/pgadmin4
     container_name: pgadmin4
