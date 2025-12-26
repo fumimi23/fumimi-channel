@@ -1,0 +1,30 @@
+{
+  "name": "@app/frontend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@repo/ui": "workspace:*",
+    "@tanstack/react-router": "^1.143.11",
+    "hono": "^4.11.1",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@app/backend": "workspace:*",
+    "@tanstack/router-devtools": "^1.143.11",
+    "@tanstack/router-plugin": "^1.143.11",
+    "@types/node": "^22.10.2",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:"
+  }
+}
