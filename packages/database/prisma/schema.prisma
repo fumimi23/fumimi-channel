@@ -20,6 +20,22 @@ datasource db {
 // 匿名前提のため永続ユーザモデルは外部公開しない想定。必要なら内部 user テーブルを追加可能。
 // =============================
 
+/// 掲示板カテゴリ
+model BoardCategory {
+  id          String  @id @default(uuid()) @db.Uuid
+  name        String  @db.VarChar(255)
+  description String? @db.Text
+  sortOrder   Int     @default(0) // 表示順
+
+  boards Board[]
+
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @db.Timestamptz(6)
+
+  @@index([sortOrder])
+  @@schema("fumimi_channel")
+}
+
 /// 掲示板 (板)
 model Board {
   // key を主キーとする (自然キー)。URL 及び参照用。
@@ -28,11 +44,15 @@ model Board {
   description String  @db.Text
   isReadOnly  Boolean @default(false) // true の間は新規スレ・投稿禁止 (閲覧のみ)
 
+  categoryId String        @db.Uuid
+  category   BoardCategory @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+
   threads Thread[]
 
   createdAt DateTime @default(now()) @db.Timestamptz(6)
   updatedAt DateTime @updatedAt @db.Timestamptz(6)
 
+  @@index([categoryId])
   @@schema("fumimi_channel")
 }
 
