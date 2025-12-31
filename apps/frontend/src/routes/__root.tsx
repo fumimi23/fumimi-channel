@@ -4,14 +4,14 @@ import {useEffect, useState} from 'react';
 import {type InferResponseType} from 'hono/client';
 import {apiClient} from '../lib/api-client.js';
 
-type Board = InferResponseType<typeof apiClient.api.boards.$get>['boards'][number];
+type BoardCategory = InferResponseType<typeof apiClient.api.boards.$get>['categories'][number];
 
 export const Route = createRootRoute({
 	component: RootComponent,
 });
 
 function RootComponent() {
-	const [boards, setBoards] = useState<Board[]>([]);
+	const [categories, setCategories] = useState<BoardCategory[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState<string | undefined>(undefined);
 
@@ -25,7 +25,7 @@ function RootComponent() {
 				}
 
 				const data = await response.json();
-				setBoards(data.boards);
+				setCategories(data.categories);
 			} catch (error_) {
 				setError(error_ instanceof Error ? error_.message : 'Unknown error');
 			} finally {
@@ -63,17 +63,36 @@ function RootComponent() {
 
 				{isLoading && <div style={{fontSize: '0.875rem', color: '#666'}}>読込中...</div>}
 				{error && <div style={{fontSize: '0.875rem', color: 'red'}}>{error}</div>}
-				{!isLoading && !error && boards.length === 0 && (
-					<div style={{fontSize: '0.875rem', color: '#666'}}>掲示板がありません</div>
+				{!isLoading && !error && categories.length === 0 && (
+					<div style={{fontSize: '0.875rem', color: '#666'}}>カテゴリがありません</div>
 				)}
-				{!isLoading && !error && boards.map(board => (
-					<div key={board.key} style={{fontSize: '0.875rem'}}>
-						<div style={{fontWeight: 'bold'}}>{board.title}</div>
-						{board.description && (
-							<div style={{fontSize: '0.75rem', color: '#666', marginTop: '0.25rem'}}>
-								{board.description}
+				{!isLoading && !error && categories.map(category => (
+					<div key={category.id} style={{marginBottom: '1.5rem'}}>
+						<div style={{
+							fontSize: '0.875rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#333',
+						}}>
+							{category.name}
+						</div>
+						{category.description && (
+							<div style={{fontSize: '0.75rem', color: '#666', marginBottom: '0.5rem'}}>
+								{category.description}
 							</div>
 						)}
+						{category.boards.length === 0
+							? (
+								<div style={{fontSize: '0.75rem', color: '#999', marginLeft: '0.5rem'}}>
+									掲示板なし
+								</div>
+							)
+							: (
+								<div style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
+									{category.boards.map(board => (
+										<div key={board.key} style={{fontSize: '0.875rem', paddingLeft: '0.5rem'}}>
+											<div style={{fontWeight: 'bold'}}>{board.title}</div>
+										</div>
+									))}
+								</div>
+							)}
 					</div>
 				))}
 			</nav>
