@@ -57,5 +57,49 @@ export const apiRouter = new Hono()
 				})),
 			})),
 		});
+	})
+
+/**
+ * GET /api/boards/:boardKey
+ * 特定の板の情報を取得
+ */
+	.get('/boards/:boardKey', async c => {
+		const {boardKey} = c.req.param();
+
+		const board = await prisma.board.findUnique({
+			where: {
+				key: boardKey,
+			},
+			select: {
+				key: true,
+				title: true,
+				description: true,
+				isReadOnly: true,
+				createdAt: true,
+				updatedAt: true,
+				category: {
+					select: {
+						id: true,
+						name: true,
+					},
+				},
+			},
+		});
+
+		if (!board) {
+			return c.json({error: 'Board not found'}, 404);
+		}
+
+		return c.json({
+			board: {
+				key: board.key,
+				title: board.title,
+				description: board.description,
+				isReadOnly: board.isReadOnly,
+				createdAt: toIsoString(board.createdAt),
+				updatedAt: toIsoString(board.updatedAt),
+				category: board.category,
+			},
+		});
 	});
 
