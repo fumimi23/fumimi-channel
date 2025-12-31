@@ -88,7 +88,13 @@ function RootComponent() {
 								<div style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
 									{category.boards.map(board => (
 										<div key={board.key} style={{fontSize: '0.875rem', paddingLeft: '0.5rem'}}>
-											<div style={{fontWeight: 'bold'}}>{board.title}</div>
+											<Link
+												to={`/board/${board.key}`}
+												style={{fontWeight: 'bold', textDecoration: 'none', color: 'inherit'}}
+												className='hover:underline'
+											>
+												{board.title}
+											</Link>
 										</div>
 									))}
 								</div>

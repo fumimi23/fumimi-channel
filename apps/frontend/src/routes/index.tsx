@@ -10,8 +10,7 @@ function Index() {
 	return (
 		<div className={styles.container}>
 			<header className={styles.header}>
-				<h1>Fumimi Channel</h1>
-				<p>Vite + React + TypeScript + TanStack Router</p>
+				<h1>ふみみちゃんねる</h1>
 			</header>
 
 			<main className={styles.main}>
