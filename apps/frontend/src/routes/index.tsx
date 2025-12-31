@@ -7,6 +7,7 @@ export const Route = createFileRoute('/')({
 });
 
 function Index() {
+	document.title = 'ふみみちゃんねる';
 	return (
 		<div className={styles.container}>
 			<header className={styles.header}>
