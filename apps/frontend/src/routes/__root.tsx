@@ -89,7 +89,7 @@ function RootComponent() {
 									{category.boards.map(board => (
 										<div key={board.key} style={{fontSize: '0.875rem', paddingLeft: '0.5rem'}}>
 											<Link
-												to="/board/$boardKey"
+												to='/board/$boardKey'
 												params={{boardKey: board.key}}
 												style={{fontWeight: 'bold', textDecoration: 'none', color: 'inherit'}}
 												className='hover:underline'
