@@ -287,4 +287,174 @@ export const apiRouter = new Hono()
 				},
 			}, 201);
 		},
+	)
+
+/**
+ * GET /api/boards/:boardKey/threads/:threadId
+ * 特定のスレッドの詳細と投稿一覧を取得
+ */
+	.get(
+		'/boards/:boardKey/threads/:threadId',
+		zValidator(
+			'param',
+			z.object({
+				boardKey: z.string().max(64),
+				threadId: z.string().uuid(),
+			}),
+		),
+		async c => {
+			const {boardKey, threadId} = c.req.valid('param');
+
+			// スレッドと投稿を取得
+			const thread = await prisma.thread.findFirst({
+				where: {
+					id: threadId,
+					boardKey,
+				},
+				select: {
+					id: true,
+					title: true,
+					status: true,
+					createdAt: true,
+					updatedAt: true,
+					board: {
+						select: {
+							key: true,
+							title: true,
+							isReadOnly: true,
+						},
+					},
+					posts: {
+						select: {
+							id: true,
+							body: true,
+							name: true,
+							createdAt: true,
+						},
+						orderBy: {
+							createdAt: 'asc',
+						},
+					},
+				},
+			});
+
+			if (!thread) {
+				return c.json({error: 'Thread not found'}, 404);
+			}
+
+			return c.json({
+				thread: {
+					id: thread.id,
+					title: thread.title,
+					status: thread.status,
+					createdAt: toIsoString(thread.createdAt),
+					updatedAt: toIsoString(thread.updatedAt),
+					board: thread.board,
+				},
+				posts: thread.posts.map((post, index) => ({
+					id: post.id,
+					number: index + 1, // 投稿番号
+					body: post.body,
+					name: post.name ?? '名無しさん',
+					createdAt: toIsoString(post.createdAt),
+				})),
+			});
+		},
+	)
+
+/**
+ * POST /api/boards/:boardKey/threads/:threadId/posts
+ * スレッドに投稿を追加
+ */
+	.post(
+		'/boards/:boardKey/threads/:threadId/posts',
+		zValidator(
+			'param',
+			z.object({
+				boardKey: z.string().max(64),
+				threadId: z.string().uuid(),
+			}),
+		),
+		zValidator(
+			'json',
+			z.object({
+				body: z.string().min(1),
+				name: z.string().max(255).optional(),
+			}),
+		),
+		async c => {
+			const {boardKey, threadId} = c.req.valid('param');
+			const {body, name} = c.req.valid('json');
+
+			// クライアントのIPアドレスを取得
+			const ipAddress = c.req.header('x-forwarded-for')?.split(',')[0]?.trim()
+				?? c.req.header('x-real-ip')
+				?? 'unknown';
+
+			// スレッドの存在確認
+			const thread = await prisma.thread.findFirst({
+				where: {
+					id: threadId,
+					boardKey,
+				},
+				select: {
+					id: true,
+					status: true,
+					board: {
+						select: {
+							isReadOnly: true,
+						},
+					},
+				},
+			});
+
+			if (!thread) {
+				return c.json({error: 'Thread not found'}, 404);
+			}
+
+			if (thread.board.isReadOnly) {
+				return c.json({error: 'This board is read-only'}, 403);
+			}
+
+			if (thread.status !== 'OPEN') {
+				return c.json({error: 'Thread is closed'}, 403);
+			}
+
+			// 投稿を作成してスレッドのupdatedAtを更新（bump）
+			const post = await prisma.$transaction(async tx => {
+				const newPost = await tx.post.create({
+					data: {
+						threadId,
+						body,
+						name: name ?? null,
+						ipAddress,
+					},
+					select: {
+						id: true,
+						body: true,
+						name: true,
+						createdAt: true,
+					},
+				});
+
+				// スレッドのupdatedAtを更新（bump）
+				await tx.thread.update({
+					where: {id: threadId},
+					data: {
+						updatedAt: new Date(),
+					},
+				});
+
+				return newPost;
+			});
+
+			return c.json({
+				post: {
+					id: post.id,
+					body: post.body,
+					name: post.name ?? '名無しさん',
+					createdAt: toIsoString(post.createdAt),
+				},
+			}, 201);
+		},
 	);

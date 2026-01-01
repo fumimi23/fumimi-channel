@@ -1,4 +1,4 @@
-import {createFileRoute} from '@tanstack/react-router';
+import {createFileRoute, Link} from '@tanstack/react-router';
 import {useEffect, useState} from 'react';
 import {type InferResponseType} from 'hono/client';
 import {Button} from '@repo/ui';
@@ -143,7 +143,16 @@ function BoardComponent() {
 												}}
 											>
 												<div>
-													<h4 style={{margin: 0}}>{thread.title}</h4>
+													<Link
+														to="/board/$boardKey/thread/$threadId"
+														params={{boardKey, threadId: thread.id}}
+														style={{
+															textDecoration: 'none',
+															color: 'var(--color-primary, #1976d2)',
+														}}
+													>
+														<h4 style={{margin: 0, marginBottom: '0.25rem'}}>{thread.title}</h4>
+													</Link>
 													<small style={{color: '#666'}}>
 														投稿数: {thread.postCount} | 最終更新: {new Date(thread.updatedAt).toLocaleString('ja-JP')}
 													</small>
