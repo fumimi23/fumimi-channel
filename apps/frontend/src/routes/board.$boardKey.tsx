@@ -7,14 +7,8 @@ export const Route = createFileRoute('/board/$boardKey')({
 
 function BoardLayoutComponent() {
 	return (
-		<div className={styles.container}>
-			<header className={styles.header}>
-				<h1>ふみみちゃんねる</h1>
-			</header>
-
-			<main className={styles.main}>
-				<Outlet />
-			</main>
-		</div>
+		<main className={styles.main}>
+			<Outlet />
+		</main>
 	);
 }

@@ -92,7 +92,7 @@ function BoardComponent() {
 	}
 
 	return (
-		<div className={styles.container}>
+		<>
 			<main className={styles.main}>
 				<div style={{padding: '2rem'}}>
 					{error && <p style={{color: 'red'}}>{error}</p>}
@@ -208,6 +208,6 @@ function BoardComponent() {
 				onSuccess={handleThreadCreated}
 				boardKey={boardKey}
 			/>
-		</div>
+		</>
 	)
 }
