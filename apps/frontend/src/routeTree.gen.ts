@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BoardBoardKeyRouteImport } from './routes/board.$boardKey'
+import { Route as BoardBoardKeyIndexRouteImport } from './routes/board.$boardKey.index'
+import { Route as BoardBoardKeyThreadThreadIdRouteImport } from './routes/board.$boardKey.thread.$threadId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +24,56 @@ const BoardBoardKeyRoute = BoardBoardKeyRouteImport.update({
   path: '/board/$boardKey',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BoardBoardKeyIndexRoute = BoardBoardKeyIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BoardBoardKeyRoute,
+} as any)
+const BoardBoardKeyThreadThreadIdRoute =
+  BoardBoardKeyThreadThreadIdRouteImport.update({
+    id: '/thread/$threadId',
+    path: '/thread/$threadId',
+    getParentRoute: () => BoardBoardKeyRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/board/$boardKey': typeof BoardBoardKeyRoute
+  '/board/$boardKey': typeof BoardBoardKeyRouteWithChildren
+  '/board/$boardKey/': typeof BoardBoardKeyIndexRoute
+  '/board/$boardKey/thread/$threadId': typeof BoardBoardKeyThreadThreadIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/board/$boardKey': typeof BoardBoardKeyRoute
+  '/board/$boardKey': typeof BoardBoardKeyIndexRoute
+  '/board/$boardKey/thread/$threadId': typeof BoardBoardKeyThreadThreadIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/board/$boardKey': typeof BoardBoardKeyRoute
+  '/board/$boardKey': typeof BoardBoardKeyRouteWithChildren
+  '/board/$boardKey/': typeof BoardBoardKeyIndexRoute
+  '/board/$boardKey/thread/$threadId': typeof BoardBoardKeyThreadThreadIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/board/$boardKey'
+  fullPaths:
+    | '/'
+    | '/board/$boardKey'
+    | '/board/$boardKey/'
+    | '/board/$boardKey/thread/$threadId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/board/$boardKey'
-  id: '__root__' | '/' | '/board/$boardKey'
+  to: '/' | '/board/$boardKey' | '/board/$boardKey/thread/$threadId'
+  id:
+    | '__root__'
+    | '/'
+    | '/board/$boardKey'
+    | '/board/$boardKey/'
+    | '/board/$boardKey/thread/$threadId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  BoardBoardKeyRoute: typeof BoardBoardKeyRoute
+  BoardBoardKeyRoute: typeof BoardBoardKeyRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +92,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BoardBoardKeyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/board/$boardKey/': {
+      id: '/board/$boardKey/'
+      path: '/'
+      fullPath: '/board/$boardKey/'
+      preLoaderRoute: typeof BoardBoardKeyIndexRouteImport
+      parentRoute: typeof BoardBoardKeyRoute
+    }
+    '/board/$boardKey/thread/$threadId': {
+      id: '/board/$boardKey/thread/$threadId'
+      path: '/thread/$threadId'
+      fullPath: '/board/$boardKey/thread/$threadId'
+      preLoaderRoute: typeof BoardBoardKeyThreadThreadIdRouteImport
+      parentRoute: typeof BoardBoardKeyRoute
+    }
   }
 }
 
+interface BoardBoardKeyRouteChildren {
+  BoardBoardKeyIndexRoute: typeof BoardBoardKeyIndexRoute
+  BoardBoardKeyThreadThreadIdRoute: typeof BoardBoardKeyThreadThreadIdRoute
+}
+
+const BoardBoardKeyRouteChildren: BoardBoardKeyRouteChildren = {
+  BoardBoardKeyIndexRoute: BoardBoardKeyIndexRoute,
+  BoardBoardKeyThreadThreadIdRoute: BoardBoardKeyThreadThreadIdRoute,
+}
+
+const BoardBoardKeyRouteWithChildren = BoardBoardKeyRoute._addFileChildren(
+  BoardBoardKeyRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  BoardBoardKeyRoute: BoardBoardKeyRoute,
+  BoardBoardKeyRoute: BoardBoardKeyRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
