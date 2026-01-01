@@ -90,7 +90,9 @@ model Post {
   threadId String @db.Uuid
   thread   Thread @relation(fields: [threadId], references: [id], onDelete: Cascade)
 
-  body String @db.Text
+  body      String  @db.Text
+  name      String? @db.VarChar(255) // 投稿者名 (オプショナル、未入力時は匿名扱い)
+  ipAddress String  @db.VarChar(45) // IPv4/IPv6 対応 (IPv6 は最大45文字)
 
   createdAt DateTime @default(now()) @db.Timestamptz(6)
   updatedAt DateTime @updatedAt @db.Timestamptz(6)

@@ -1,0 +1,23 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.error {
+  color: var(--color-danger);
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+.success {
+  color: var(--color-success);
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}

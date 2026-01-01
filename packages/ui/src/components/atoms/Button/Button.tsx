@@ -14,6 +14,8 @@ export interface ButtonProps {
   onClick?: () => void;
   /** ボタンのタイプ */
   type?: 'button' | 'submit' | 'reset';
+  /** 関連付けるフォームのID */
+  form?: string;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -23,6 +25,7 @@ export const Button: React.FC<ButtonProps> = ({
   disabled = false,
   onClick,
   type = 'button',
+  form,
 }) => {
   const className = `${styles.button} ${styles[variant]} ${styles[size]}`;
 
@@ -32,6 +35,7 @@ export const Button: React.FC<ButtonProps> = ({
       className={className}
       disabled={disabled}
       onClick={onClick}
+      form={form}
     >
       {children}
     </button>
