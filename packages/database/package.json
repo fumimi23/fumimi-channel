@@ -10,10 +10,14 @@
     "db:migrate-deploy": "prisma migrate deploy"
   },
   "devDependencies": {
+    "@types/node": "^22.10.5",
+    "@types/pg": "^8.11.10",
     "prisma": "^6.16.2",
     "typescript": "catalog:"
   },
   "dependencies": {
-    "@prisma/client": "^6.16.2"
+    "@prisma/adapter-pg": "^6.16.2",
+    "@prisma/client": "^6.16.2",
+    "pg": "^8.13.1"
   }
 }
