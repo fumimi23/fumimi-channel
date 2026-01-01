@@ -48,15 +48,6 @@ function RootComponent() {
 					gap: '1rem',
 				}}
 			>
-				<Link to='/' className='[&.active]:font-bold'>
-					Home
-				</Link>
-				<Link to='/about' className='[&.active]:font-bold'>
-					About
-				</Link>
-
-				<hr style={{margin: '1rem 0', border: 'none', borderTop: '1px solid #ccc'}} />
-
 				<div style={{fontSize: '0.875rem', fontWeight: 'bold', marginBottom: '0.5rem'}}>
 					掲示板一覧
 				</div>
