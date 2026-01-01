@@ -1,7 +1,6 @@
 import {createFileRoute, Link} from '@tanstack/react-router';
 import {useEffect, useState} from 'react';
 import {type InferResponseType} from 'hono/client';
-import styles from '../App.module.css';
 import {apiClient} from '../lib/api-client.js';
 import {PostForm} from '../components/PostForm.js';
 
@@ -62,13 +61,7 @@ function ThreadComponent() {
 	};
 
 	return (
-		<div className={styles.container}>
-			<header className={styles.header}>
-				<h1>ふみみちゃんねる</h1>
-			</header>
-
-			<main className={styles.main}>
-				<div style={{padding: '2rem'}}>
+		<div style={{padding: '2rem'}}>
 					{error && <p style={{color: 'red'}}>{error}</p>}
 					
 					{isLoading ? (
@@ -191,8 +184,6 @@ function ThreadComponent() {
 							)}
 						</>
 					) : null}
-				</div>
-			</main>
 		</div>
 	);
 }
