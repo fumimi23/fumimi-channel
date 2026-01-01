@@ -3,6 +3,7 @@ import {TanStackRouterDevtools} from '@tanstack/router-devtools';
 import {useEffect, useState} from 'react';
 import {type InferResponseType} from 'hono/client';
 import {apiClient} from '../lib/api-client.js';
+import styles from '../App.module.css';
 
 type BoardCategory = InferResponseType<typeof apiClient.api.boards.$get>['categories'][number];
 
@@ -95,8 +96,13 @@ function RootComponent() {
 				))}
 			</nav>
 			<div style={{flex: 1}}>
-				<Outlet />
-				<TanStackRouterDevtools />
+				<div className={styles.container}>
+					<header className={styles.header}>
+						<h1>ふみみちゃんねる</h1>
+					</header>
+					<Outlet />
+					<TanStackRouterDevtools />
+				</div>
 			</div>
 		</div>
 	);
