@@ -1,8 +1,10 @@
 import {createFileRoute} from '@tanstack/react-router';
 import {useEffect, useState} from 'react';
 import {type InferResponseType} from 'hono/client';
+import {Button} from '@repo/ui';
 import styles from '../App.module.css';
 import {apiClient} from '../lib/api-client.js';
+import {ThreadCreateModal} from '../components/ThreadCreateModal.js';
 
 type BoardInfo = InferResponseType<typeof apiClient.api.boards[':boardKey']['$get'], 200>['board'];
 type ThreadsResponse = InferResponseType<typeof apiClient.api.boards[':boardKey']['threads']['$get'], 200>;
@@ -20,6 +22,7 @@ function BoardComponent() {
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState<string | undefined>(undefined);
 	const [currentPage, setCurrentPage] = useState(1);
+	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
 	useEffect(() => {
 		async function fetchBoard() {
@@ -47,32 +50,6 @@ function BoardComponent() {
 	}, [boardKey]);
 
 	useEffect(() => {
-		async function fetchThreads() {
-			setIsLoading(true);
-			try {
-				const response = await apiClient.api.boards[':boardKey']['threads'].$get({
-					param: {boardKey},
-					query: {
-						page: currentPage.toString(),
-						limit: '50',
-						status: 'OPEN',
-					},
-				});
-
-				if (!response.ok) {
-					throw new Error('スレッド一覧の取得に失敗しました');
-				}
-
-				const data = await response.json();
-				setThreads(data.threads);
-				setPagination(data.pagination);
-			} catch (error_) {
-				setError(error_ instanceof Error ? error_.message : 'Unknown error');
-			} finally {
-				setIsLoading(false);
-			}
-		}
-
 		void fetchThreads();
 	}, [boardKey, currentPage]);
 
@@ -81,6 +58,38 @@ function BoardComponent() {
 			document.title = `${board.title} - ふみみちゃんねる`;
 		}
 	}, [board]);
+
+	const handleThreadCreated = () => {
+		// スレッド作成後、1ページ目に戻してリロード
+		setCurrentPage(1);
+		void fetchThreads();
+	};
+
+	async function fetchThreads() {
+		setIsLoading(true);
+		try {
+			const response = await apiClient.api.boards[':boardKey']['threads'].$get({
+				param: {boardKey},
+				query: {
+					page: currentPage.toString(),
+					limit: '50',
+					status: 'OPEN',
+				},
+			});
+
+			if (!response.ok) {
+				throw new Error('スレッド一覧の取得に失敗しました');
+			}
+
+			const data = await response.json();
+			setThreads(data.threads);
+			setPagination(data.pagination);
+		} catch (error_) {
+			setError(error_ instanceof Error ? error_.message : 'Unknown error');
+		} finally {
+			setIsLoading(false);
+		}
+	}
 
 	return (
 		<div className={styles.container}>
@@ -95,6 +104,22 @@ function BoardComponent() {
 						<>
 							<h2>{board.title}</h2>
 							{board.description && <p>{board.description}</p>}
+							
+							<div style={{marginTop: '1rem'}}>
+								<Button
+									onClick={() => {
+										setIsCreateModalOpen(true);
+									}}
+									disabled={board.isReadOnly}
+								>
+									新規スレッド作成
+								</Button>
+								{board.isReadOnly && (
+									<p style={{color: '#666', fontSize: '0.875rem', marginTop: '0.5rem'}}>
+										この板は読み取り専用です
+									</p>
+								)}
+							</div>
 							
 							<hr style={{margin: '2rem 0'}} />
 							
@@ -169,6 +194,15 @@ function BoardComponent() {
 					)}
 				</div>
 			</main>
+
+			<ThreadCreateModal
+				isOpen={isCreateModalOpen}
+				onClose={() => {
+					setIsCreateModalOpen(false);
+				}}
+				onSuccess={handleThreadCreated}
+				boardKey={boardKey}
+			/>
 		</div>
 	);
 }

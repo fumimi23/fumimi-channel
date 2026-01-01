@@ -202,4 +202,89 @@ export const apiRouter = new Hono()
 				},
 			});
 		},
+	)
+
+/**
+ * POST /api/boards/:boardKey/threads
+ * 新規スレッドを作成
+ */
+	.post(
+		'/boards/:boardKey/threads',
+		zValidator(
+			'param',
+			z.object({
+				boardKey: z.string().max(64),
+			}),
+		),
+		zValidator(
+			'json',
+			z.object({
+				title: z.string().min(1).max(255),
+				body: z.string().min(1),
+				name: z.string().max(255).optional(),
+			}),
+		),
+		async c => {
+			const {boardKey} = c.req.valid('param');
+			const {title, body, name} = c.req.valid('json');
+
+			// クライアントのIPアドレスを取得
+			const ipAddress = c.req.header('x-forwarded-for')?.split(',')[0]?.trim()
+				?? c.req.header('x-real-ip')
+				?? 'unknown';
+
+			// 板の存在確認と読み取り専用チェック
+			const board = await prisma.board.findUnique({
+				where: {key: boardKey},
+				select: {key: true, isReadOnly: true},
+			});
+
+			if (!board) {
+				return c.json({error: 'Board not found'}, 404);
+			}
+
+			if (board.isReadOnly) {
+				return c.json({error: 'This board is read-only'}, 403);
+			}
+
+			// トランザクションでスレッドと最初の投稿を作成
+			const thread = await prisma.$transaction(async tx => {
+				const newThread = await tx.thread.create({
+					data: {
+						boardKey,
+						title,
+						status: 'OPEN',
+					},
+					select: {
+						id: true,
+						title: true,
+						status: true,
+						createdAt: true,
+						updatedAt: true,
+					},
+				});
+
+				// 最初の投稿を作成
+				await tx.post.create({
+					data: {
+						threadId: newThread.id,
+						body,
+						name: name ?? null,
+						ipAddress,
+					},
+				});
+
+				return newThread;
+			});
+
+			return c.json({
+				thread: {
+					id: thread.id,
+					title: thread.title,
+					status: thread.status,
+					createdAt: toIsoString(thread.createdAt),
+					updatedAt: toIsoString(thread.updatedAt),
+				},
+			}, 201);
+		},
 	);
