@@ -20,7 +20,7 @@ function convertAnchorsToLinks(text: string): React.ReactNode[] {
 	const parts: React.ReactNode[] = [];
 	const regex = />>(\d+)/g;
 	let lastIndex = 0;
-	let match: RegExpExecArray | undefined;
+	let match;
 
 	while ((match = regex.exec(text)) !== null) {
 		// マッチの前のテキストを追加
