@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Button.module.css';
 
-export interface ButtonProps {
+export type ButtonProps = {
   /** ボタンのテキスト */
   children: React.ReactNode;
   /** ボタンのバリアント */
@@ -16,7 +16,7 @@ export interface ButtonProps {
   type?: 'button' | 'submit' | 'reset';
   /** 関連付けるフォームのID */
   form?: string;
-}
+};
 
 export const Button: React.FC<ButtonProps> = ({
   children,

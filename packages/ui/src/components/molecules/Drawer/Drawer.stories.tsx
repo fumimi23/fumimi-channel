@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
-import { Drawer } from './Drawer';
-import { Button } from '../../atoms/Button';
+import type {Meta, StoryObj} from '@storybook/react';
+import {useState} from 'react';
+import {Button} from '../../atoms/Button';
+import {Drawer} from './Drawer';
 
 const meta = {
   title: 'Molecules/Drawer',
@@ -60,25 +60,29 @@ type Story = StoryObj<typeof meta>;
 
 // 左からのオーバーレイ（デフォルト）
 export const LeftOverlay: Story = {
-  render: (args) => {
+  render(args) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
       <>
-        <div style={{ padding: '2rem' }}>
-          <Button onClick={() => setIsOpen(true)}>
+        <div style={{padding: '2rem'}}>
+          <Button onClick={() => {
+ setIsOpen(true);
+}}>
             ドロワーを開く（左から）
           </Button>
         </div>
-        <Drawer {...args} isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <Drawer {...args} isOpen={isOpen} onClose={() => {
+ setIsOpen(false);
+}}>
           <nav>
-            <h2 style={{ marginTop: 0, fontSize: '1.5rem', fontWeight: 700 }}>
+            <h2 style={{marginTop: 0, fontSize: '1.5rem', fontWeight: 700}}>
               メニュー
             </h2>
-            <ul style={{ listStyle: 'none', padding: 0 }}>
-              <li style={{ marginBottom: '1rem' }}>
+            <ul style={{listStyle: 'none', padding: 0}}>
+              <li style={{marginBottom: '1rem'}}>
                 <a
-                  href="#"
+                  href='#'
                   style={{
                     color: 'var(--color-link)',
                     textDecoration: 'none',
@@ -88,9 +92,9 @@ export const LeftOverlay: Story = {
                   ホーム
                 </a>
               </li>
-              <li style={{ marginBottom: '1rem' }}>
+              <li style={{marginBottom: '1rem'}}>
                 <a
-                  href="#"
+                  href='#'
                   style={{
                     color: 'var(--color-link)',
                     textDecoration: 'none',
@@ -100,9 +104,9 @@ export const LeftOverlay: Story = {
                   サービス一覧
                 </a>
               </li>
-              <li style={{ marginBottom: '1rem' }}>
+              <li style={{marginBottom: '1rem'}}>
                 <a
-                  href="#"
+                  href='#'
                   style={{
                     color: 'var(--color-link)',
                     textDecoration: 'none',
@@ -112,9 +116,9 @@ export const LeftOverlay: Story = {
                   お知らせ
                 </a>
               </li>
-              <li style={{ marginBottom: '1rem' }}>
+              <li style={{marginBottom: '1rem'}}>
                 <a
-                  href="#"
+                  href='#'
                   style={{
                     color: 'var(--color-link)',
                     textDecoration: 'none',
@@ -124,9 +128,9 @@ export const LeftOverlay: Story = {
                   お問い合わせ
                 </a>
               </li>
-              <li style={{ marginBottom: '1rem' }}>
+              <li style={{marginBottom: '1rem'}}>
                 <a
-                  href="#"
+                  href='#'
                   style={{
                     color: 'var(--color-link)',
                     textDecoration: 'none',
@@ -146,59 +150,63 @@ export const LeftOverlay: Story = {
     position: 'left',
     title: 'ナビゲーションメニュー',
     isOpen: false,
-    onClose: () => {},
+    onClose() {},
     children: null,
   },
 };
 
 // 右からのオーバーレイ
 export const RightOverlay: Story = {
-  render: (args) => {
+  render(args) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
       <>
-        <div style={{ padding: '2rem' }}>
-          <Button onClick={() => setIsOpen(true)}>
+        <div style={{padding: '2rem'}}>
+          <Button onClick={() => {
+ setIsOpen(true);
+}}>
             ドロワーを開く（右から）
           </Button>
         </div>
-        <Drawer {...args} isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <Drawer {...args} isOpen={isOpen} onClose={() => {
+ setIsOpen(false);
+}}>
           <div>
-            <h2 style={{ marginTop: 0, fontSize: '1.5rem', fontWeight: 700 }}>
+            <h2 style={{marginTop: 0, fontSize: '1.5rem', fontWeight: 700}}>
               設定
             </h2>
-            <div style={{ marginBottom: '1.5rem' }}>
-              <h3 style={{ fontSize: '1.125rem', fontWeight: 700, marginBottom: '0.5rem' }}>
+            <div style={{marginBottom: '1.5rem'}}>
+              <h3 style={{fontSize: '1.125rem', fontWeight: 700, marginBottom: '0.5rem'}}>
                 通知設定
               </h3>
-              <label style={{ display: 'block', marginBottom: '0.5rem' }}>
-                <input type="checkbox" defaultChecked />
-                <span style={{ marginLeft: '0.5rem' }}>メール通知を受け取る</span>
+              <label style={{display: 'block', marginBottom: '0.5rem'}}>
+                <input type='checkbox' defaultChecked />
+                <span style={{marginLeft: '0.5rem'}}>メール通知を受け取る</span>
               </label>
-              <label style={{ display: 'block', marginBottom: '0.5rem' }}>
-                <input type="checkbox" />
-                <span style={{ marginLeft: '0.5rem' }}>プッシュ通知を受け取る</span>
+              <label style={{display: 'block', marginBottom: '0.5rem'}}>
+                <input type='checkbox' />
+                <span style={{marginLeft: '0.5rem'}}>プッシュ通知を受け取る</span>
               </label>
             </div>
-            <div style={{ marginBottom: '1.5rem' }}>
-              <h3 style={{ fontSize: '1.125rem', fontWeight: 700, marginBottom: '0.5rem' }}>
+            <div style={{marginBottom: '1.5rem'}}>
+              <h3 style={{fontSize: '1.125rem', fontWeight: 700, marginBottom: '0.5rem'}}>
                 表示設定
               </h3>
-              <label style={{ display: 'block', marginBottom: '0.5rem' }}>
-                <input type="radio" name="theme" defaultChecked />
-                <span style={{ marginLeft: '0.5rem' }}>ライトモード</span>
+              <label style={{display: 'block', marginBottom: '0.5rem'}}>
+                <input type='radio' name='theme' defaultChecked />
+                <span style={{marginLeft: '0.5rem'}}>ライトモード</span>
               </label>
-              <label style={{ display: 'block', marginBottom: '0.5rem' }}>
-                <input type="radio" name="theme" />
-                <span style={{ marginLeft: '0.5rem' }}>ダークモード</span>
+              <label style={{display: 'block', marginBottom: '0.5rem'}}>
+                <input type='radio' name='theme' />
+                <span style={{marginLeft: '0.5rem'}}>ダークモード</span>
               </label>
-              <label style={{ display: 'block', marginBottom: '0.5rem' }}>
-                <input type="radio" name="theme" />
-                <span style={{ marginLeft: '0.5rem' }}>システム設定に従う</span>
+              <label style={{display: 'block', marginBottom: '0.5rem'}}>
+                <input type='radio' name='theme' />
+                <span style={{marginLeft: '0.5rem'}}>システム設定に従う</span>
               </label>
             </div>
-            <Button variant="primary">設定を保存</Button>
+            <Button variant='primary'>設定を保存</Button>
           </div>
         </Drawer>
       </>
@@ -208,32 +216,36 @@ export const RightOverlay: Story = {
     position: 'right',
     title: '設定パネル',
     isOpen: false,
-    onClose: () => {},
+    onClose() {},
     children: null,
   },
 };
 
 // 全面オーバーレイ
 export const FullOverlay: Story = {
-  render: (args) => {
+  render(args) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
       <>
-        <div style={{ padding: '2rem' }}>
-          <Button onClick={() => setIsOpen(true)}>
+        <div style={{padding: '2rem'}}>
+          <Button onClick={() => {
+ setIsOpen(true);
+}}>
             ドロワーを開く（全面）
           </Button>
         </div>
-        <Drawer {...args} isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <Drawer {...args} isOpen={isOpen} onClose={() => {
+ setIsOpen(false);
+}}>
           <div>
-            <h1 style={{ marginTop: 0, fontSize: '2rem', fontWeight: 700 }}>
+            <h1 style={{marginTop: 0, fontSize: '2rem', fontWeight: 700}}>
               検索結果
             </h1>
-            <div style={{ marginBottom: '1.5rem' }}>
+            <div style={{marginBottom: '1.5rem'}}>
               <input
-                type="search"
-                placeholder="キーワードを入力"
+                type='search'
+                placeholder='キーワードを入力'
                 style={{
                   width: '100%',
                   padding: '0.75rem',
@@ -244,10 +256,10 @@ export const FullOverlay: Story = {
               />
             </div>
             <div>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1rem' }}>
+              <h2 style={{fontSize: '1.25rem', fontWeight: 700, marginBottom: '1rem'}}>
                 検索結果（12件）
               </h2>
-              {[1, 2, 3, 4, 5].map((item) => (
+              {[1, 2, 3, 4, 5].map(item => (
                 <div
                   key={item}
                   style={{
@@ -257,14 +269,14 @@ export const FullOverlay: Story = {
                     borderRadius: 'var(--radius-base)',
                   }}
                 >
-                  <h3 style={{ fontSize: '1.125rem', fontWeight: 700, marginBottom: '0.5rem' }}>
+                  <h3 style={{fontSize: '1.125rem', fontWeight: 700, marginBottom: '0.5rem'}}>
                     検索結果 {item}
                   </h3>
-                  <p style={{ color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
+                  <p style={{color: 'var(--text-secondary)', marginBottom: '0.5rem'}}>
                     これは検索結果の説明文です。関連する情報がここに表示されます。
                   </p>
                   <a
-                    href="#"
+                    href='#'
                     style={{
                       color: 'var(--color-link)',
                       textDecoration: 'none',
@@ -285,14 +297,14 @@ export const FullOverlay: Story = {
     position: 'full',
     title: '検索',
     isOpen: false,
-    onClose: () => {},
+    onClose() {},
     children: null,
   },
 };
 
 // モバイルメニューの例
 export const MobileMenu: Story = {
-  render: (args) => {
+  render(args) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -305,7 +317,9 @@ export const MobileMenu: Story = {
           }}
         >
           <button
-            onClick={() => setIsOpen(true)}
+            onClick={() => {
+ setIsOpen(true);
+}}
             style={{
               background: 'none',
               border: 'none',
@@ -313,34 +327,36 @@ export const MobileMenu: Story = {
               cursor: 'pointer',
               padding: '0.5rem',
             }}
-            aria-label="メニューを開く"
+            aria-label='メニューを開く'
           >
             <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              width='24'
+              height='24'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              strokeWidth='2'
+              strokeLinecap='round'
+              strokeLinejoin='round'
             >
-              <line x1="3" y1="12" x2="21" y2="12" />
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <line x1="3" y1="18" x2="21" y2="18" />
+              <line x1='3' y1='12' x2='21' y2='12' />
+              <line x1='3' y1='6' x2='21' y2='6' />
+              <line x1='3' y1='18' x2='21' y2='18' />
             </svg>
           </button>
-          <span style={{ marginLeft: '1rem', fontSize: '1.25rem', fontWeight: 700 }}>
+          <span style={{marginLeft: '1rem', fontSize: '1.25rem', fontWeight: 700}}>
             デジタル庁
           </span>
         </div>
-        <div style={{ padding: '2rem' }}>
-          <h1 style={{ fontSize: '2rem', fontWeight: 700 }}>ページタイトル</h1>
+        <div style={{padding: '2rem'}}>
+          <h1 style={{fontSize: '2rem', fontWeight: 700}}>ページタイトル</h1>
           <p>ここにメインコンテンツが表示されます。</p>
         </div>
-        <Drawer {...args} isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <Drawer {...args} isOpen={isOpen} onClose={() => {
+ setIsOpen(false);
+}}>
           <nav>
-            <div style={{ marginBottom: '2rem' }}>
+            <div style={{marginBottom: '2rem'}}>
               <h2
                 style={{
                   marginTop: 0,
@@ -352,10 +368,10 @@ export const MobileMenu: Story = {
                 デジタル庁
               </h2>
             </div>
-            <ul style={{ listStyle: 'none', padding: 0 }}>
-              <li style={{ marginBottom: '0.5rem' }}>
+            <ul style={{listStyle: 'none', padding: 0}}>
+              <li style={{marginBottom: '0.5rem'}}>
                 <a
-                  href="#"
+                  href='#'
                   style={{
                     display: 'block',
                     padding: '0.75rem',
@@ -364,19 +380,19 @@ export const MobileMenu: Story = {
                     fontSize: '1rem',
                     borderRadius: 'var(--radius-base)',
                   }}
-                  onMouseEnter={(e) => {
+                  onMouseEnter={e => {
                     e.currentTarget.style.backgroundColor = 'var(--surface-hover)';
                   }}
-                  onMouseLeave={(e) => {
+                  onMouseLeave={e => {
                     e.currentTarget.style.backgroundColor = 'transparent';
                   }}
                 >
                   トップページ
                 </a>
               </li>
-              <li style={{ marginBottom: '0.5rem' }}>
+              <li style={{marginBottom: '0.5rem'}}>
                 <a
-                  href="#"
+                  href='#'
                   style={{
                     display: 'block',
                     padding: '0.75rem',
@@ -385,19 +401,19 @@ export const MobileMenu: Story = {
                     fontSize: '1rem',
                     borderRadius: 'var(--radius-base)',
                   }}
-                  onMouseEnter={(e) => {
+                  onMouseEnter={e => {
                     e.currentTarget.style.backgroundColor = 'var(--surface-hover)';
                   }}
-                  onMouseLeave={(e) => {
+                  onMouseLeave={e => {
                     e.currentTarget.style.backgroundColor = 'transparent';
                   }}
                 >
                   デジタル庁について
                 </a>
               </li>
-              <li style={{ marginBottom: '0.5rem' }}>
+              <li style={{marginBottom: '0.5rem'}}>
                 <a
-                  href="#"
+                  href='#'
                   style={{
                     display: 'block',
                     padding: '0.75rem',
@@ -406,19 +422,19 @@ export const MobileMenu: Story = {
                     fontSize: '1rem',
                     borderRadius: 'var(--radius-base)',
                   }}
-                  onMouseEnter={(e) => {
+                  onMouseEnter={e => {
                     e.currentTarget.style.backgroundColor = 'var(--surface-hover)';
                   }}
-                  onMouseLeave={(e) => {
+                  onMouseLeave={e => {
                     e.currentTarget.style.backgroundColor = 'transparent';
                   }}
                 >
                   政策・取組
                 </a>
               </li>
-              <li style={{ marginBottom: '0.5rem' }}>
+              <li style={{marginBottom: '0.5rem'}}>
                 <a
-                  href="#"
+                  href='#'
                   style={{
                     display: 'block',
                     padding: '0.75rem',
@@ -427,19 +443,19 @@ export const MobileMenu: Story = {
                     fontSize: '1rem',
                     borderRadius: 'var(--radius-base)',
                   }}
-                  onMouseEnter={(e) => {
+                  onMouseEnter={e => {
                     e.currentTarget.style.backgroundColor = 'var(--surface-hover)';
                   }}
-                  onMouseLeave={(e) => {
+                  onMouseLeave={e => {
                     e.currentTarget.style.backgroundColor = 'transparent';
                   }}
                 >
                   お知らせ
                 </a>
               </li>
-              <li style={{ marginBottom: '0.5rem' }}>
+              <li style={{marginBottom: '0.5rem'}}>
                 <a
-                  href="#"
+                  href='#'
                   style={{
                     display: 'block',
                     padding: '0.75rem',
@@ -448,10 +464,10 @@ export const MobileMenu: Story = {
                     fontSize: '1rem',
                     borderRadius: 'var(--radius-base)',
                   }}
-                  onMouseEnter={(e) => {
+                  onMouseEnter={e => {
                     e.currentTarget.style.backgroundColor = 'var(--surface-hover)';
                   }}
-                  onMouseLeave={(e) => {
+                  onMouseLeave={e => {
                     e.currentTarget.style.backgroundColor = 'transparent';
                   }}
                 >
@@ -468,7 +484,7 @@ export const MobileMenu: Story = {
     position: 'left',
     title: 'モバイルメニュー',
     isOpen: false,
-    onClose: () => {},
+    onClose() {},
     children: null,
   },
 };

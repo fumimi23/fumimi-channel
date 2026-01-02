@@ -20,7 +20,7 @@ function convertAnchorsToLinks(text: string): React.ReactNode[] {
 	const parts: React.ReactNode[] = [];
 	const regex = />>(\d+)/g;
 	let lastIndex = 0;
-	let match: RegExpExecArray | null;
+	let match: RegExpExecArray | undefined;
 
 	while ((match = regex.exec(text)) !== null) {
 		// マッチの前のテキストを追加
@@ -30,10 +30,11 @@ function convertAnchorsToLinks(text: string): React.ReactNode[] {
 
 		// >>数字の部分をリンクとして追加
 		const postNumber = match[1];
-		if (!postNumber) continue;
-		
-		parts.push(
-			<a
+		if (!postNumber) {
+continue;
+}
+
+		parts.push(<a
 				key={`${match.index}-${postNumber}`}
 				href={`#${postNumber}`}
 				style={{
@@ -41,7 +42,7 @@ function convertAnchorsToLinks(text: string): React.ReactNode[] {
 					textDecoration: 'none',
 					fontWeight: 500,
 				}}
-				onClick={(e) => {
+				onClick={e => {
 					e.preventDefault();
 					const element = document.getElementById(postNumber);
 					if (element) {
@@ -50,8 +51,7 @@ function convertAnchorsToLinks(text: string): React.ReactNode[] {
 				}}
 			>
 				{match[0]}
-			</a>,
-		);
+			</a>);
 
 		lastIndex = regex.lastIndex;
 	}
@@ -87,7 +87,7 @@ function ThreadComponent() {
 		setError(undefined);
 
 		try {
-			const response = await apiClient.api.boards[':boardKey']['threads'][':threadId'].$get({
+			const response = await apiClient.api.boards[':boardKey'].threads[':threadId'].$get({
 				param: {boardKey, threadId},
 			});
 
@@ -120,10 +120,10 @@ function ThreadComponent() {
 	return (
 		<div style={{padding: '2rem'}}>
 					{error && <p style={{color: 'red'}}>{error}</p>}
-					
+
 					{isLoading ? (
 						<p>読込中...</p>
-					) : thread ? (
+					) : (thread ? (
 						<>
 							<Breadcrumb
 								items={[
@@ -136,7 +136,9 @@ function ThreadComponent() {
 							{/* スレッド情報 */}
 							<div style={{marginBottom: '1.5rem'}}>
 								<h2 style={{marginBottom: '0.5rem'}}>{thread.title}</h2>
-								<div style={{display: 'flex', gap: '1rem', fontSize: '0.875rem', color: '#666'}}>
+								<div style={{
+display: 'flex', gap: '1rem', fontSize: '0.875rem', color: '#666',
+}}>
 									<span>投稿数: {posts.length}</span>
 									<span>
 										ステータス:{' '}
@@ -160,9 +162,11 @@ function ThreadComponent() {
 
 							{/* 投稿一覧 */}
 							<div style={{marginBottom: '2rem'}}>
-								{posts.length === 0 ? (
+								{posts.length === 0
+? (
 									<p>投稿がありません</p>
-								) : (
+								)
+: (
 									<div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
 										{posts.map(post => (
 											<article
@@ -188,8 +192,10 @@ function ThreadComponent() {
 												>
 													<div>
 														<button
-															type="button"
-															onClick={() => handleQuoteClick(post.number)}
+															type='button'
+															onClick={() => {
+ handleQuoteClick(post.number);
+}}
 															style={{
 																color: 'var(--color-text-primary, #333)',
 																textDecoration: 'none',
@@ -225,14 +231,16 @@ function ThreadComponent() {
 							</div>
 
 							{/* 返信フォーム */}
-							{thread.status === 'OPEN' && !thread.board.isReadOnly ? (
+							{thread.status === 'OPEN' && !thread.board.isReadOnly
+? (
 								<PostForm
 									ref={postFormRef}
 									boardKey={boardKey}
 									threadId={threadId}
 									onPostCreated={handlePostCreated}
 								/>
-							) : (
+							)
+: (
 								<div
 									style={{
 										padding: '1rem',
@@ -249,7 +257,7 @@ function ThreadComponent() {
 								</div>
 							)}
 						</>
-					) : null}
+					) : null)}
 		</div>
 	);
 }

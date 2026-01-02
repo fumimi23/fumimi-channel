@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Breadcrumb } from './Breadcrumb';
+import type {Meta, StoryObj} from '@storybook/react';
+import {Breadcrumb} from './Breadcrumb';
 
 const meta = {
   title: 'Molecules/Breadcrumb',
@@ -69,9 +69,9 @@ type Story = StoryObj<typeof meta>;
 export const Basic: Story = {
   args: {
     items: [
-      { label: 'ホーム', href: '/' },
-      { label: 'サービス', href: '/services' },
-      { label: '現在のページ' },
+      {label: 'ホーム', href: '/'},
+      {label: 'サービス', href: '/services'},
+      {label: '現在のページ'},
     ],
     mobileDisplay: 'wrap',
   },
@@ -81,12 +81,12 @@ export const Basic: Story = {
 export const LongWithWrap: Story = {
   args: {
     items: [
-      { label: 'ホーム', href: '/' },
-      { label: 'デジタル庁について', href: '/about' },
-      { label: '政策・取組', href: '/about/policies' },
-      { label: 'デジタル社会の実現に向けた取組', href: '/about/policies/digital-society' },
-      { label: 'マイナンバーカードの利活用促進', href: '/about/policies/digital-society/mynumber' },
-      { label: '現在のページ：マイナンバーカードの申請方法について' },
+      {label: 'ホーム', href: '/'},
+      {label: 'デジタル庁について', href: '/about'},
+      {label: '政策・取組', href: '/about/policies'},
+      {label: 'デジタル社会の実現に向けた取組', href: '/about/policies/digital-society'},
+      {label: 'マイナンバーカードの利活用促進', href: '/about/policies/digital-society/mynumber'},
+      {label: '現在のページ：マイナンバーカードの申請方法について'},
     ],
     mobileDisplay: 'wrap',
   },
@@ -96,12 +96,12 @@ export const LongWithWrap: Story = {
 export const LongWithScroll: Story = {
   args: {
     items: [
-      { label: 'ホーム', href: '/' },
-      { label: 'デジタル庁について', href: '/about' },
-      { label: '政策・取組', href: '/about/policies' },
-      { label: 'デジタル社会の実現に向けた取組', href: '/about/policies/digital-society' },
-      { label: 'マイナンバーカードの利活用促進', href: '/about/policies/digital-society/mynumber' },
-      { label: '現在のページ：マイナンバーカードの申請方法について' },
+      {label: 'ホーム', href: '/'},
+      {label: 'デジタル庁について', href: '/about'},
+      {label: '政策・取組', href: '/about/policies'},
+      {label: 'デジタル社会の実現に向けた取組', href: '/about/policies/digital-society'},
+      {label: 'マイナンバーカードの利活用促進', href: '/about/policies/digital-society/mynumber'},
+      {label: '現在のページ：マイナンバーカードの申請方法について'},
     ],
     mobileDisplay: 'scroll',
   },
@@ -118,9 +118,9 @@ export const LongWithScroll: Story = {
 export const ThreeLevels: Story = {
   args: {
     items: [
-      { label: 'トップページ', href: '/' },
-      { label: '行政サービス', href: '/services' },
-      { label: '申請・届出' },
+      {label: 'トップページ', href: '/'},
+      {label: '行政サービス', href: '/services'},
+      {label: '申請・届出'},
     ],
     mobileDisplay: 'wrap',
   },
@@ -130,13 +130,13 @@ export const ThreeLevels: Story = {
 export const DeepHierarchy: Story = {
   args: {
     items: [
-      { label: 'ホーム', href: '/' },
-      { label: 'カテゴリ1', href: '/category1' },
-      { label: 'カテゴリ2', href: '/category1/category2' },
-      { label: 'カテゴリ3', href: '/category1/category2/category3' },
-      { label: 'カテゴリ4', href: '/category1/category2/category3/category4' },
-      { label: 'カテゴリ5', href: '/category1/category2/category3/category4/category5' },
-      { label: '現在のページ' },
+      {label: 'ホーム', href: '/'},
+      {label: 'カテゴリ1', href: '/category1'},
+      {label: 'カテゴリ2', href: '/category1/category2'},
+      {label: 'カテゴリ3', href: '/category1/category2/category3'},
+      {label: 'カテゴリ4', href: '/category1/category2/category3/category4'},
+      {label: 'カテゴリ5', href: '/category1/category2/category3/category4/category5'},
+      {label: '現在のページ'},
     ],
     mobileDisplay: 'wrap',
   },
@@ -146,10 +146,10 @@ export const DeepHierarchy: Story = {
 export const LongJapaneseLabels: Story = {
   args: {
     items: [
-      { label: 'デジタル庁トップページ', href: '/' },
-      { label: 'デジタル社会形成の司令塔として', href: '/about' },
-      { label: '国民目線のデジタル化を推進します', href: '/about/mission' },
-      { label: '誰一人取り残されないデジタル社会の実現' },
+      {label: 'デジタル庁トップページ', href: '/'},
+      {label: 'デジタル社会形成の司令塔として', href: '/about'},
+      {label: '国民目線のデジタル化を推進します', href: '/about/mission'},
+      {label: '誰一人取り残されないデジタル社会の実現'},
     ],
     mobileDisplay: 'wrap',
   },
@@ -157,7 +157,7 @@ export const LongJapaneseLabels: Story = {
 
 // 実際の使用例：ページレイアウト内での配置
 export const InPageLayout: Story = {
-  render: (args) => (
+  render: args => (
     <div>
       {/* ヘッダー（模擬） */}
       <header
@@ -168,14 +168,14 @@ export const InPageLayout: Story = {
           marginBottom: '0',
         }}
       >
-        <h1 style={{ margin: 0, fontSize: '1.25rem' }}>デジタル庁</h1>
+        <h1 style={{margin: 0, fontSize: '1.25rem'}}>デジタル庁</h1>
       </header>
 
       {/* パンくずリスト */}
       <Breadcrumb {...args} />
 
       {/* ページ見出し */}
-      <main style={{ padding: '0 1rem' }}>
+      <main style={{padding: '0 1rem'}}>
         <h1
           style={{
             fontSize: '2rem',
@@ -195,10 +195,10 @@ export const InPageLayout: Story = {
   ),
   args: {
     items: [
-      { label: 'ホーム', href: '/' },
-      { label: 'サービス一覧', href: '/services' },
-      { label: 'オンライン申請', href: '/services/online' },
-      { label: '現在のページ' },
+      {label: 'ホーム', href: '/'},
+      {label: 'サービス一覧', href: '/services'},
+      {label: 'オンライン申請', href: '/services/online'},
+      {label: '現在のページ'},
     ],
     mobileDisplay: 'wrap',
   },
@@ -206,7 +206,7 @@ export const InPageLayout: Story = {
 
 // 横スクロール仕様での使用例（上部・下部配置）
 export const ScrollWithTopAndBottom: Story = {
-  render: (args) => (
+  render: args => (
     <div>
       {/* ヘッダー（模擬） */}
       <header
@@ -217,18 +217,18 @@ export const ScrollWithTopAndBottom: Story = {
           marginBottom: '0',
         }}
       >
-        <h1 style={{ margin: 0, fontSize: '1.25rem' }}>デジタル庁</h1>
+        <h1 style={{margin: 0, fontSize: '1.25rem'}}>デジタル庁</h1>
       </header>
 
       {/* 上部：横スクロール仕様のパンくずリスト */}
       <Breadcrumb
         items={args.items}
-        mobileDisplay="scroll"
-        ariaLabel="パンくずリスト（上部）"
+        mobileDisplay='scroll'
+        ariaLabel='パンくずリスト（上部）'
       />
 
       {/* ページ見出し */}
-      <main style={{ padding: '0 1rem' }}>
+      <main style={{padding: '0 1rem'}}>
         <h1
           style={{
             fontSize: '2rem',
@@ -245,17 +245,21 @@ export const ScrollWithTopAndBottom: Story = {
         <p>
           コンテンツが長い場合でも、パンくずリストによってコンテンツが押し下げられることを防ぎます。
         </p>
-        <div style={{ height: '200px', backgroundColor: 'var(--background-secondary)', padding: '1rem', marginTop: '1rem' }}>
+        <div style={{
+ height: '200px', backgroundColor: 'var(--background-secondary)', padding: '1rem', marginTop: '1rem',
+}}>
           <p>コンテンツエリア</p>
         </div>
       </main>
 
       {/* 下部：改行仕様のパンくずリスト */}
-      <div style={{ padding: '0 1rem', marginTop: 'var(--spacing-8)', borderTop: '1px solid var(--border-default)', paddingTop: 'var(--spacing-4)' }}>
+      <div style={{
+ padding: '0 1rem', marginTop: 'var(--spacing-8)', borderTop: '1px solid var(--border-default)', paddingTop: 'var(--spacing-4)',
+}}>
         <Breadcrumb
           items={args.items}
-          mobileDisplay="wrap"
-          ariaLabel="パンくずリスト（下部）"
+          mobileDisplay='wrap'
+          ariaLabel='パンくずリスト（下部）'
         />
       </div>
 
@@ -268,7 +272,7 @@ export const ScrollWithTopAndBottom: Story = {
           borderTop: '1px solid var(--border-default)',
         }}
       >
-        <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+        <p style={{margin: 0, fontSize: '0.875rem', color: 'var(--text-secondary)'}}>
           © Digital Agency
         </p>
       </footer>
@@ -276,11 +280,11 @@ export const ScrollWithTopAndBottom: Story = {
   ),
   args: {
     items: [
-      { label: 'ホーム', href: '/' },
-      { label: 'デジタル庁について', href: '/about' },
-      { label: '政策・取組', href: '/about/policies' },
-      { label: 'デジタル社会の実現に向けた取組', href: '/about/policies/digital-society' },
-      { label: 'マイナンバーカードの利活用促進' },
+      {label: 'ホーム', href: '/'},
+      {label: 'デジタル庁について', href: '/about'},
+      {label: '政策・取組', href: '/about/policies'},
+      {label: 'デジタル社会の実現に向けた取組', href: '/about/policies/digital-society'},
+      {label: 'マイナンバーカードの利活用促進'},
     ],
   },
   parameters: {
@@ -297,8 +301,8 @@ export const ScrollWithTopAndBottom: Story = {
 export const TwoLevels: Story = {
   args: {
     items: [
-      { label: 'ホーム', href: '/' },
-      { label: '現在のページ' },
+      {label: 'ホーム', href: '/'},
+      {label: '現在のページ'},
     ],
     mobileDisplay: 'wrap',
   },

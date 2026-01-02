@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { ThemeToggle } from './ThemeToggle';
+import type {Meta, StoryObj} from '@storybook/react';
+import {ThemeToggle} from './ThemeToggle';
 
 const meta: Meta<typeof ThemeToggle> = {
   title: 'Molecules/ThemeToggle',
@@ -38,7 +38,7 @@ export const Dark: Story = {
 export const WithCallback: Story = {
   args: {
     defaultTheme: 'system',
-    onThemeChange: (theme) => {
+    onThemeChange(theme) {
       console.log('Theme changed to:', theme);
     },
   },
@@ -53,21 +53,21 @@ export const WithCallback: Story = {
 
 export const Interactive: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+    <div style={{display: 'flex', flexDirection: 'column', gap: '24px'}}>
       <div>
-        <h3 style={{ marginBottom: '16px', color: 'var(--text-primary)' }}>テーマトグル</h3>
+        <h3 style={{marginBottom: '16px', color: 'var(--text-primary)'}}>テーマトグル</h3>
         <ThemeToggle />
       </div>
-      <div style={{ 
-        padding: '24px', 
-        backgroundColor: 'var(--background-secondary)', 
+      <div style={{
+        padding: '24px',
+        backgroundColor: 'var(--background-secondary)',
         borderRadius: '8px',
-        border: '1px solid var(--border-default)'
+        border: '1px solid var(--border-default)',
       }}>
-        <p style={{ color: 'var(--text-primary)', marginBottom: '8px' }}>
+        <p style={{color: 'var(--text-primary)', marginBottom: '8px'}}>
           このカードは現在のテーマに応じて色が変わります。
         </p>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>
+        <p style={{color: 'var(--text-secondary)', fontSize: '14px'}}>
           上のトグルボタンでテーマを切り替えてみてください。
         </p>
       </div>

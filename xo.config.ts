@@ -12,6 +12,8 @@ const config = {
 			},
 		],
 		'@typescript-eslint/no-unsafe-assignment': 'off',
+		// eslint-disable-next-line @typescript-eslint/naming-convention
+		'@stylistic/indent': 'off',
 	},
 };
 
