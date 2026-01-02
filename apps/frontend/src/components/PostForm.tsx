@@ -1,5 +1,5 @@
 import {
-	type FormEvent, useState, forwardRef, useImperativeHandle,
+	type FormEvent, type KeyboardEvent, useState, forwardRef, useImperativeHandle,
 } from 'react';
 import {Input, TextArea, Button} from '@repo/ui';
 import {apiClient} from '../lib/api-client.js';
@@ -68,6 +68,13 @@ export const PostForm = forwardRef<PostFormHandle, PostFormProps>(({boardKey, th
 		}
 	};
 
+	const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+		if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+			event.preventDefault();
+			void handleSubmit(event as unknown as FormEvent);
+		}
+	};
+
 	return (
 		<div className={styles.formContainer}>
 			<h3 className={styles.formTitle}>返信する</h3>
@@ -95,6 +102,7 @@ export const PostForm = forwardRef<PostFormHandle, PostFormProps>(({boardKey, th
 						onChange={event => {
 							setBody(event.target.value);
 						}}
+						onKeyDown={handleKeyDown}
 						placeholder='投稿内容を入力してください'
 						rows={5}
 						required

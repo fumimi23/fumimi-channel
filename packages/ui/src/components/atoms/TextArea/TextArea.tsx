@@ -21,6 +21,8 @@ export type TextAreaProps = {
 	onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
 	/** Focus時のハンドラー */
 	onFocus?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
+	/** KeyDown時のハンドラー */
+	onKeyDown?: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
 	/** 編集不可状態 */
 	readOnly?: boolean;
 	/** 必須フィールド */
@@ -156,6 +158,7 @@ const EditableTextArea: React.FC<{
 	onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 	onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
 	onFocus?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
+	onKeyDown?: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
 	required: boolean;
 	rows: number;
 	maxLength?: number;
@@ -172,6 +175,7 @@ const EditableTextArea: React.FC<{
 	onChange,
 	onBlur,
 	onFocus,
+	onKeyDown,
 	required,
 	rows,
 	maxLength,
@@ -189,6 +193,7 @@ const EditableTextArea: React.FC<{
 		onChange={onChange}
 		onBlur={onBlur}
 		onFocus={onFocus}
+		onKeyDown={onKeyDown}
 		readOnly={false}
 		required={required}
 		rows={rows}
@@ -279,6 +284,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
 	onChange,
 	onBlur,
 	onFocus,
+	onKeyDown,
 	readOnly = false,
 	required = false,
 	size = 'md',
@@ -355,6 +361,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
 					onChange={onChange}
 					onBlur={onBlur}
 					onFocus={onFocus}
+					onKeyDown={onKeyDown}
 					required={required}
 					rows={rows}
 					maxLength={maxLength}
