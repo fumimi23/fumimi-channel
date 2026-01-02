@@ -1,3 +1,3 @@
-export {Button} from './Button';
-export {Input} from './Input';
-export {TextArea} from './TextArea';
+export {Button} from './Button/index.js';
+export {Input} from './Input/index.js';
+export {TextArea} from './TextArea/index.js';

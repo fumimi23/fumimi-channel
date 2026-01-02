@@ -1,7 +1,7 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import {useState} from 'react';
-import {Button} from '../../atoms/Button';
-import {Drawer} from './Drawer';
+import {Button} from '../../atoms/Button/index.js';
+import {Drawer} from './Drawer.js';
 
 const meta = {
   title: 'Molecules/Drawer',

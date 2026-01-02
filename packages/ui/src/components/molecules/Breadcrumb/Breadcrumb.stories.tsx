@@ -1,5 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import {Breadcrumb} from './Breadcrumb';
+import {Breadcrumb} from './Breadcrumb.js';
 
 const meta = {
   title: 'Molecules/Breadcrumb',
