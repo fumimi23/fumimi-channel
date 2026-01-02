@@ -120,7 +120,7 @@ export const apiRouter = new Hono()
  * クエリパラメータ:
  * - page: ページ番号（デフォルト: 1）
  * - limit: 取得件数（デフォルト: 50）
- * - status: スレッドステータス（デフォルト: OPEN）
+ * - status: スレッドステータス（省略時: OPENとCLOSEDを両方表示、ARCHIVEDは明示的に指定が必要）
  */
 	.get(
 		'/boards/:boardKey/threads',
@@ -135,7 +135,7 @@ export const apiRouter = new Hono()
 			z.object({
 				page: z.string().optional().default('1').transform(Number).pipe(z.number().int().positive()),
 				limit: z.string().optional().default('50').transform(Number).pipe(z.number().int().positive().max(100)),
-				status: z.enum(['OPEN', 'CLOSED', 'ARCHIVED']).optional().default('OPEN'),
+				status: z.enum(['OPEN', 'CLOSED', 'ARCHIVED']).optional(),
 			}),
 		),
 		async c => {
@@ -152,12 +152,15 @@ export const apiRouter = new Hono()
 				return c.json({error: 'Board not found'}, 404);
 			}
 
+			// statusが指定されていない場合はOPENとCLOSEDを取得（ARCHIVEDは除外）
+			const statusFilter = status ? status : {in: ['OPEN', 'CLOSED'] as const} as {in: Array<'OPEN' | 'CLOSED'>};
+
 			// スレッド一覧を取得
 			const [threads, total] = await Promise.all([
 				prisma.thread.findMany({
 					where: {
 						boardKey,
-						status,
+						status: statusFilter,
 					},
 					select: {
 						id: true,
@@ -180,7 +183,7 @@ export const apiRouter = new Hono()
 				prisma.thread.count({
 					where: {
 						boardKey,
-						status,
+						status: statusFilter,
 					},
 				}),
 			]);
