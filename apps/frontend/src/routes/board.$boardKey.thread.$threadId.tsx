@@ -139,8 +139,11 @@ function ThreadComponent() {
 													<div>
 														<strong style={{color: 'var(--color-text-primary, #333)'}}>
 															{post.number}:
-														</strong>{' '}
+														</strong>
+														{' '}
 														<span style={{fontWeight: 500}}>{post.name}</span>
+														{' '}
+														<span style={{color: '#999'}}>ID:{post.posterId}</span>
 													</div>
 													<time>{new Date(post.createdAt).toLocaleString('ja-JP')}</time>
 												</div>

@@ -1,3 +1,4 @@
+import {createHash} from 'node:crypto';
 import {Hono} from 'hono';
 import {zValidator} from '@hono/zod-validator';
 import {z} from 'zod';
@@ -6,6 +7,19 @@ import {createPrismaClient} from '@repo/database';
 
 // Prisma Client インスタンス
 const prisma = createPrismaClient();
+
+/**
+ * IPアドレスと日付から9桁の投稿者IDを生成
+ * 同じIPアドレスでも日付が変われば異なるIDになる
+ */
+function generatePosterId(ipAddress: string, createdAt: Date): string {
+	// 日付部分（YYYY-MM-DD）を取得
+	const dateString = createdAt.toISOString().split('T')[0];
+	// IPアドレス + 日付でハッシュ化
+	const hash = createHash('sha256').update(`${ipAddress}-${dateString}`).digest('hex');
+	// 最初の9文字を取得して大文字に変換
+	return hash.slice(0, 9).toUpperCase();
+}
 
 export const apiRouter = new Hono()
 
@@ -152,7 +166,7 @@ export const apiRouter = new Hono()
 				return c.json({error: 'Board not found'}, 404);
 			}
 
-			// statusが指定されていない場合はOPENとCLOSEDを取得（ARCHIVEDは除外）
+			// Statusが指定されていない場合はOPENとCLOSEDを取得（ARCHIVEDは除外）
 			const statusFilter = status ? status : {in: ['OPEN', 'CLOSED'] as const} as {in: Array<'OPEN' | 'CLOSED'>};
 
 			// スレッド一覧を取得
@@ -333,6 +347,7 @@ export const apiRouter = new Hono()
 							body: true,
 							name: true,
 							createdAt: true,
+							ipAddress: true,
 						},
 						orderBy: {
 							createdAt: 'asc',
@@ -359,6 +374,7 @@ export const apiRouter = new Hono()
 					number: index + 1, // 投稿番号
 					body: post.body,
 					name: post.name ?? '名無しさん',
+					posterId: generatePosterId(post.ipAddress, post.createdAt),
 					createdAt: toIsoString(post.createdAt),
 				})),
 			});
