@@ -1,4 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react';
+import {fn} from '@storybook/test';
 import {useState} from 'react';
 import {Button} from '../../atoms/Button/index.js';
 import {Drawer} from './Drawer.js';
@@ -150,7 +151,7 @@ export const LeftOverlay: Story = {
     position: 'left',
     title: 'ナビゲーションメニュー',
     isOpen: false,
-    onClose() {},
+    onClose: fn(),
     children: null,
   },
 };
@@ -216,7 +217,7 @@ export const RightOverlay: Story = {
     position: 'right',
     title: '設定パネル',
     isOpen: false,
-    onClose() {},
+    onClose: fn(),
     children: null,
   },
 };
@@ -297,7 +298,7 @@ export const FullOverlay: Story = {
     position: 'full',
     title: '検索',
     isOpen: false,
-    onClose() {},
+    onClose: fn(),
     children: null,
   },
 };
@@ -484,7 +485,7 @@ export const MobileMenu: Story = {
     position: 'left',
     title: 'モバイルメニュー',
     isOpen: false,
-    onClose() {},
+    onClose: fn(),
     children: null,
   },
 };
