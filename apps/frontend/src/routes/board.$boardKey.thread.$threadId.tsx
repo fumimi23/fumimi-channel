@@ -31,27 +31,20 @@ function convertAnchorsToLinks(text: string): React.ReactNode[] {
 		// >>数字の部分をリンクとして追加
 		const postNumber = match[1];
 		if (!postNumber) {
-continue;
-}
+			continue;
+		}
 
 		parts.push(<a
-				key={`${match.index}-${postNumber}`}
-				href={`#${postNumber}`}
-				style={{
-					color: 'var(--color-primary, #1976d2)',
-					textDecoration: 'none',
-					fontWeight: 500,
-				}}
-				onClick={event => {
-					event.preventDefault();
-					const element = document.getElementById(postNumber);
-					if (element) {
-						element.scrollIntoView({behavior: 'smooth', block: 'start'});
-					}
-				}}
-			>
-				{match[0]}
-			</a>);
+			key={`${match.index}-${postNumber}`}
+			href={`#${postNumber}`}
+			style={{
+				color: 'var(--color-primary, #1976d2)',
+				textDecoration: 'none',
+				fontWeight: 500,
+			}}
+		>
+			{match[0]}
+		</a>);
 
 		lastIndex = regex.lastIndex;
 	}

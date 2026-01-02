@@ -13,6 +13,10 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   /* デジタル庁デザインシステム準拠のタイポグラフィ */
   font-family: var(--font-family-base);
