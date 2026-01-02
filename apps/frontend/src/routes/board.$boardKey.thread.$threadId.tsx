@@ -1,6 +1,7 @@
-import {createFileRoute, Link} from '@tanstack/react-router';
+import {createFileRoute} from '@tanstack/react-router';
 import {useEffect, useState, useRef} from 'react';
 import {type InferResponseType} from 'hono/client';
+import {Breadcrumb} from '@repo/ui';
 import {apiClient} from '../lib/api-client.js';
 import {PostForm, type PostFormHandle} from '../components/PostForm.js';
 
@@ -124,22 +125,13 @@ function ThreadComponent() {
 						<p>読込中...</p>
 					) : thread ? (
 						<>
-							{/* パンくずリスト */}
-							<nav style={{marginBottom: '1rem', fontSize: '0.875rem'}}>
-								<Link to="/" style={{color: 'var(--color-primary, #1976d2)'}}>
-									トップ
-								</Link>
-								{' > '}
-								<Link
-									to="/board/$boardKey"
-									params={{boardKey}}
-									style={{color: 'var(--color-primary, #1976d2)'}}
-								>
-									{thread.board.title}
-								</Link>
-								{' > '}
-								<span>{thread.title}</span>
-							</nav>
+							<Breadcrumb
+								items={[
+									{label: 'トップ', href: '/'},
+									{label: thread.board.title, href: `/board/${boardKey}`},
+									{label: thread.title},
+								]}
+							/>
 
 							{/* スレッド情報 */}
 							<div style={{marginBottom: '1.5rem'}}>

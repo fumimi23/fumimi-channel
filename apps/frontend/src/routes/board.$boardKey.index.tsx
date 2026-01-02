@@ -1,7 +1,7 @@
 import {createFileRoute, Link} from '@tanstack/react-router';
 import {useEffect, useState} from 'react';
 import {type InferResponseType} from 'hono/client';
-import {Button} from '@repo/ui';
+import {Button, Breadcrumb} from '@repo/ui';
 import styles from '../App.module.css';
 import {apiClient} from '../lib/api-client.js';
 import {ThreadCreateModal} from '../components/ThreadCreateModal.js';
@@ -97,7 +97,13 @@ function BoardComponent() {
 					{error && <p style={{color: 'red'}}>{error}</p>}
 					{board && (
 						<>
-							<h2>{board.title}</h2>
+							<Breadcrumb
+								items={[
+									{label: 'トップ', href: '/'},
+									{label: board.title},
+								]}
+							/>
+							<h2 style={{marginTop: '1rem'}}>{board.title}</h2>
 							{board.description && <p>{board.description}</p>}
 							
 							<div style={{marginTop: '1rem'}}>

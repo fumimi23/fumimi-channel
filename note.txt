@@ -1,0 +1,1 @@
+sudo docker compose exec backend /bin/sh -c "cd /app/packages/database && pnpm i && pnpm db:migrate-deploy"
