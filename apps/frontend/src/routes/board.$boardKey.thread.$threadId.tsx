@@ -12,6 +12,57 @@ export const Route = createFileRoute('/board/$boardKey/thread/$threadId')({
 	component: ThreadComponent,
 });
 
+/**
+ * 投稿本文の>>数字をページ内リンクに変換する
+ */
+function convertAnchorsToLinks(text: string): React.ReactNode[] {
+	const parts: React.ReactNode[] = [];
+	const regex = />>(\d+)/g;
+	let lastIndex = 0;
+	let match: RegExpExecArray | null;
+
+	while ((match = regex.exec(text)) !== null) {
+		// マッチの前のテキストを追加
+		if (match.index > lastIndex) {
+			parts.push(text.slice(lastIndex, match.index));
+		}
+
+		// >>数字の部分をリンクとして追加
+		const postNumber = match[1];
+		if (!postNumber) continue;
+		
+		parts.push(
+			<a
+				key={`${match.index}-${postNumber}`}
+				href={`#${postNumber}`}
+				style={{
+					color: 'var(--color-primary, #1976d2)',
+					textDecoration: 'none',
+					fontWeight: 500,
+				}}
+				onClick={(e) => {
+					e.preventDefault();
+					const element = document.getElementById(postNumber);
+					if (element) {
+						element.scrollIntoView({behavior: 'smooth', block: 'start'});
+					}
+				}}
+			>
+				{match[0]}
+			</a>,
+		);
+
+		lastIndex = regex.lastIndex;
+	}
+
+	// 残りのテキストを追加
+	if (lastIndex < text.length) {
+		parts.push(text.slice(lastIndex));
+	}
+
+	return parts.length > 0 ? parts : [text];
+}
+
 function ThreadComponent() {
 	const {boardKey, threadId} = Route.useParams();
 	const [thread, setThread] = useState<ThreadInfo | undefined>(undefined);
@@ -173,7 +224,7 @@ function ThreadComponent() {
 														color: 'var(--color-text-primary, #333)',
 													}}
 												>
-													{post.body}
+													{convertAnchorsToLinks(post.body)}
 												</div>
 											</article>
 										))}
