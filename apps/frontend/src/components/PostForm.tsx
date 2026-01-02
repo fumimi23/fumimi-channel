@@ -1,4 +1,6 @@
-import {type FormEvent, useState} from 'react';
+import {
+	type FormEvent, useState, forwardRef, useImperativeHandle,
+} from 'react';
 import {Input, TextArea, Button} from '@repo/ui';
 import {apiClient} from '../lib/api-client.js';
 import styles from './PostForm.module.css';
@@ -9,11 +11,22 @@ type PostFormProps = {
 	onPostCreated: () => void;
 };
 
-export function PostForm({boardKey, threadId, onPostCreated}: PostFormProps) {
+export type PostFormHandle = {
+	addQuote: (postNumber: number) => void;
+};
+
+export const PostForm = forwardRef<PostFormHandle, PostFormProps>(function PostForm({boardKey, threadId, onPostCreated}, ref) {
 	const [name, setName] = useState('');
 	const [body, setBody] = useState('');
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [error, setError] = useState<string | undefined>(undefined);
+
+	useImperativeHandle(ref, () => ({
+		addQuote(postNumber: number) {
+			const quote = `>>${postNumber}`;
+			setBody(previousBody => previousBody ? `${previousBody}\n${quote}` : quote);
+		},
+	}));
 
 	const handleSubmit = async (event: FormEvent) => {
 		event.preventDefault();
@@ -99,4 +112,4 @@ export function PostForm({boardKey, threadId, onPostCreated}: PostFormProps) {
 			</form>
 		</div>
 	);
-}
+});

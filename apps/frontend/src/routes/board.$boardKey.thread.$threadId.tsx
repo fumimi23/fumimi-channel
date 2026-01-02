@@ -1,8 +1,8 @@
 import {createFileRoute, Link} from '@tanstack/react-router';
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useRef} from 'react';
 import {type InferResponseType} from 'hono/client';
 import {apiClient} from '../lib/api-client.js';
-import {PostForm} from '../components/PostForm.js';
+import {PostForm, type PostFormHandle} from '../components/PostForm.js';
 
 type ThreadDetailResponse = InferResponseType<typeof apiClient.api.boards[':boardKey']['threads'][':threadId']['$get'], 200>;
 type ThreadInfo = ThreadDetailResponse['thread'];
@@ -18,6 +18,7 @@ function ThreadComponent() {
 	const [posts, setPosts] = useState<PostInfo[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState<string | undefined>(undefined);
+	const postFormRef = useRef<PostFormHandle>(null);
 
 	useEffect(() => {
 		void fetchThread();
@@ -58,6 +59,10 @@ function ThreadComponent() {
 
 	const handlePostCreated = () => {
 		void fetchThread();
+	};
+
+	const handleQuoteClick = (postNumber: number) => {
+		postFormRef.current?.addQuote(postNumber);
 	};
 
 	return (
@@ -139,9 +144,21 @@ function ThreadComponent() {
 													}}
 												>
 													<div>
-														<strong style={{color: 'var(--color-text-primary, #333)'}}>
+														<button
+															type="button"
+															onClick={() => handleQuoteClick(post.number)}
+															style={{
+																color: 'var(--color-text-primary, #333)',
+																textDecoration: 'none',
+																fontWeight: 'bold',
+																background: 'none',
+																border: 'none',
+																padding: 0,
+																cursor: 'pointer',
+															}}
+														>
 															{post.number}:
-														</strong>
+														</button>
 														{' '}
 														<span style={{fontWeight: 500}}>{post.name}</span>
 														{' '}
@@ -167,6 +184,7 @@ function ThreadComponent() {
 							{/* 返信フォーム */}
 							{thread.status === 'OPEN' && !thread.board.isReadOnly ? (
 								<PostForm
+									ref={postFormRef}
 									boardKey={boardKey}
 									threadId={threadId}
 									onPostCreated={handlePostCreated}
