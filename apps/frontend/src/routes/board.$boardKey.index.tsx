@@ -124,11 +124,15 @@ function BoardComponent() {
 
 							<hr style={{margin: '2rem 0'}} />
 
-							{isLoading ? (
+							{isLoading
+							? (
 								<p>読込中...</p>
-							) : (threads.length === 0 ? (
-								<p>スレッドがありません</p>
-							) : (
+							)
+							: (threads.length === 0
+								? (
+									<p>スレッドがありません</p>
+								)
+								: (
 								<>
 									<h3>スレッド一覧</h3>
 									<div style={{listStyle: 'none', padding: 0}}>
@@ -142,8 +146,8 @@ function BoardComponent() {
 												}}
 											>
 												<div style={{
-display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem',
-}}>
+													display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem',
+												}}>
 												<div>
 													<Link
 														to='/board/$boardKey/thread/$threadId'
@@ -254,8 +258,8 @@ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBo
 
 									{pagination && pagination.totalPages > 1 && (
 										<div style={{
-marginTop: '2rem', display: 'flex', gap: '0.5rem', justifyContent: 'center', alignItems: 'center',
-}}>
+											marginTop: '2rem', display: 'flex', gap: '0.5rem', justifyContent: 'center', alignItems: 'center',
+										}}>
 											<button
 												onClick={() => {
 													setCurrentPage(p => Math.max(1, p - 1));

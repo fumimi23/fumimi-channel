@@ -114,9 +114,12 @@ function ThreadComponent() {
 		<div style={{padding: '2rem'}}>
 					{error && <p style={{color: 'red'}}>{error}</p>}
 
-					{isLoading ? (
+					{isLoading
+					? (
 						<p>読込中...</p>
-					) : (thread ? (
+					)
+					: (thread
+						? (
 						<>
 							<Breadcrumb
 								items={[
@@ -130,8 +133,8 @@ function ThreadComponent() {
 							<div style={{marginBottom: '1.5rem'}}>
 								<h2 style={{marginBottom: '0.5rem'}}>{thread.title}</h2>
 								<div style={{
-display: 'flex', gap: '1rem', fontSize: '0.875rem', color: '#666',
-}}>
+									display: 'flex', gap: '1rem', fontSize: '0.875rem', color: '#666',
+								}}>
 									<span>投稿数: {posts.length}</span>
 									<span>
 										ステータス:{' '}
@@ -156,10 +159,10 @@ display: 'flex', gap: '1rem', fontSize: '0.875rem', color: '#666',
 							{/* 投稿一覧 */}
 							<div style={{marginBottom: '2rem'}}>
 								{posts.length === 0
-? (
+								? (
 									<p>投稿がありません</p>
 								)
-: (
+								: (
 									<div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
 										{posts.map(post => (
 											<article
@@ -187,8 +190,8 @@ display: 'flex', gap: '1rem', fontSize: '0.875rem', color: '#666',
 														<button
 															type='button'
 															onClick={() => {
- handleQuoteClick(post.number);
-}}
+																handleQuoteClick(post.number);
+															}}
 															style={{
 																color: 'var(--color-text-primary, #333)',
 																textDecoration: 'none',
@@ -225,7 +228,7 @@ display: 'flex', gap: '1rem', fontSize: '0.875rem', color: '#666',
 
 							{/* 返信フォーム */}
 							{thread.status === 'OPEN' && !thread.board.isReadOnly
-? (
+							? (
 								<PostForm
 									ref={postFormRef}
 									boardKey={boardKey}
@@ -233,7 +236,7 @@ display: 'flex', gap: '1rem', fontSize: '0.875rem', color: '#666',
 									onPostCreated={handlePostCreated}
 								/>
 							)
-: (
+							: (
 								<div
 									style={{
 										padding: '1rem',
@@ -250,7 +253,9 @@ display: 'flex', gap: '1rem', fontSize: '0.875rem', color: '#666',
 								</div>
 							)}
 						</>
-					) : null)}
+					)
+					: null
+					)}
 		</div>
 	);
 }
