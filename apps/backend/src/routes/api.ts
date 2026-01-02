@@ -1,7 +1,7 @@
 import {Hono} from 'hono';
 import {zValidator} from '@hono/zod-validator';
 import {z} from 'zod';
-import {toIsoString} from '@repo/shared';
+import {toIsoString, getNow} from '@repo/shared';
 import {createPrismaClient} from '@repo/database';
 
 // Prisma Client インスタンス
@@ -391,7 +391,7 @@ export const apiRouter = new Hono()
 				?? c.req.header('x-real-ip')
 				?? 'unknown';
 
-			// スレッドの存在確認
+			// スレッドの存在確認（基本的なチェックのみ）
 			const thread = await prisma.thread.findFirst({
 				where: {
 					id: threadId,
@@ -420,8 +420,20 @@ export const apiRouter = new Hono()
 				return c.json({error: 'Thread is closed'}, 403);
 			}
 
-			// 投稿を作成してスレッドのupdatedAtを更新（bump）
+			// トランザクション内で投稿数チェックと投稿作成を実行（レースコンディション対策）
 			const post = await prisma.$transaction(async tx => {
+				// トランザクション内で投稿数をカウント
+				const postCount = await tx.post.count({
+					where: {
+						threadId,
+					},
+				});
+
+				// 投稿数制限をチェック（1000件まで）
+				if (postCount >= 1000) {
+					throw new Error('Thread has reached the maximum number of posts (1000)');
+				}
+
 				const newPost = await tx.post.create({
 					data: {
 						threadId,
@@ -437,16 +449,33 @@ export const apiRouter = new Hono()
 					},
 				});
 
-				// スレッドのupdatedAtを更新（bump）
+				// 1000件目の投稿の場合、スレッドをCLOSEDにする
+				const updateData: {updatedAt: Date; status?: 'CLOSED'} = {
+					updatedAt: getNow().toDate(),
+				};
+
+				if (postCount + 1 >= 1000) {
+					updateData.status = 'CLOSED';
+				}
+
+				// スレッドのupdatedAtを更新（bump）、必要ならstatusも更新
 				await tx.thread.update({
 					where: {id: threadId},
-					data: {
-						updatedAt: new Date(),
-					},
+					data: updateData,
 				});
 
 				return newPost;
+			}).catch(error => {
+				if (error instanceof Error && error.message === 'Thread has reached the maximum number of posts (1000)') {
+					return null;
+				}
+
+				throw error;
 			});
+
+			if (!post) {
+				return c.json({error: 'Thread has reached the maximum number of posts (1000)'}, 403);
+			}
 
 			return c.json({
 				post: {
