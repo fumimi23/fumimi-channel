@@ -1,7 +1,7 @@
 import {createFileRoute, Link} from '@tanstack/react-router';
 import {useEffect, useState} from 'react';
 import {type InferResponseType} from 'hono/client';
-import {Button} from '@repo/ui';
+import {Button, Breadcrumb} from '@repo/ui';
 import styles from '../App.module.css';
 import {apiClient} from '../lib/api-client.js';
 import {ThreadCreateModal} from '../components/ThreadCreateModal.js';
@@ -97,7 +97,13 @@ function BoardComponent() {
 					{error && <p style={{color: 'red'}}>{error}</p>}
 					{board && (
 						<>
-							<h2>{board.title}</h2>
+							<Breadcrumb
+								items={[
+									{label: 'トップ', href: '/'},
+									{label: board.title},
+								]}
+							/>
+							<h2 style={{marginTop: '1rem'}}>{board.title}</h2>
 							{board.description && <p>{board.description}</p>}
 							
 							<div style={{marginTop: '1rem'}}>
@@ -125,18 +131,17 @@ function BoardComponent() {
 							) : (
 								<>
 									<h3>スレッド一覧</h3>
-									<ul style={{listStyle: 'none', padding: 0}}>
+									<div style={{listStyle: 'none', padding: 0}}>
 										{threads.map(thread => (
-											<li
+											<div
 												key={thread.id}
 												style={{
-													padding: '1rem',
+													padding: '1.5rem',
 													borderBottom: '1px solid #eee',
-													display: 'flex',
-													justifyContent: 'space-between',
-													alignItems: 'center',
+													marginBottom: '1rem',
 												}}
 											>
+												<div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem'}}>
 												<div>
 													<Link
 														to='/board/$boardKey/thread/$threadId'
@@ -163,9 +168,87 @@ function BoardComponent() {
 												>
 													{thread.status}
 												</span>
-											</li>
+												</div>
+
+												{/* 最初の投稿 (OP) */}
+												{thread.firstPost && (
+													<div style={{
+													border: '1px solid #e0e0e0',
+													borderRadius: '8px',
+													padding: '1rem',
+													backgroundColor: 'var(--color-bg-secondary, #fafafa)',
+														marginBottom: '0.5rem',
+													}}>
+														<div style={{
+															display: 'flex',
+															justifyContent: 'space-between',
+															alignItems: 'baseline',
+															marginBottom: '0.5rem',
+															fontSize: '0.875rem',
+															color: '#666',
+														}}>
+															<div>
+																<strong>{thread.firstPost.number}:</strong>
+																{' '}<span style={{fontWeight: 500}}>{thread.firstPost.name}</span>
+																{' '}<span style={{color: '#999'}}>ID:{thread.firstPost.posterId}</span>
+															</div>
+															<time>{new Date(thread.firstPost.createdAt).toLocaleString('ja-JP')}</time>
+														</div>
+													<div style={{whiteSpace: 'pre-wrap', wordBreak: 'break-word', color: 'var(--color-text-primary, #333)'}}>
+															{thread.firstPost.content}
+														</div>
+													</div>
+												)}
+
+												{/* 最新の投稿 */}
+												{thread.recentPosts && thread.recentPosts.length > 0 && (
+													<>
+														{thread.postCount > (thread.recentPosts.length + 1) && (
+															<div style={{
+																fontSize: '0.875rem',
+																color: '#666',
+																padding: '0.5rem',
+																textAlign: 'center',
+															}}>
+																... {thread.postCount - thread.recentPosts.length - 1} 件の投稿を省略 ...
+															</div>
+														)}
+														{thread.recentPosts.map(post => (
+															<div
+																key={post.id}
+																style={{
+																border: '1px solid #e0e0e0',
+																borderRadius: '8px',
+																padding: '1rem',
+																backgroundColor: 'var(--color-bg-secondary, #fafafa)',
+																	marginBottom: '0.5rem',
+																}}
+															>
+																<div style={{
+																	display: 'flex',
+																	justifyContent: 'space-between',
+																	alignItems: 'baseline',
+																	marginBottom: '0.5rem',
+																	fontSize: '0.875rem',
+																	color: '#666',
+																}}>
+																	<div>
+																		<strong>{post.number}:</strong>
+																		{' '}<span style={{fontWeight: 500}}>{post.name}</span>
+																		{' '}<span style={{color: '#999'}}>ID:{post.posterId}</span>
+																	</div>
+																	<time>{new Date(post.createdAt).toLocaleString('ja-JP')}</time>
+																</div>
+															<div style={{whiteSpace: 'pre-wrap', wordBreak: 'break-word', color: 'var(--color-text-primary, #333)'}}>
+																	{post.content}
+																</div>
+															</div>
+														))}
+													</>
+												)}
+											</div>
 										))}
-									</ul>
+									</div>
 									
 									{pagination && pagination.totalPages > 1 && (
 										<div style={{marginTop: '2rem', display: 'flex', gap: '0.5rem', justifyContent: 'center', alignItems: 'center'}}>
