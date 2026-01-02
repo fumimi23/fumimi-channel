@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, {useEffect, useRef} from 'react';
 import styles from './Drawer.module.css';
 
-export interface DrawerProps {
+export type DrawerProps = {
   /** ドロワーの開閉状態 */
   isOpen: boolean;
   /** 閉じるときのハンドラー */
@@ -12,7 +12,7 @@ export interface DrawerProps {
   children: React.ReactNode;
   /** ドロワーのタイトル（aria-labelに使用） */
   title?: string;
-}
+};
 
 export const Drawer: React.FC<DrawerProps> = ({
   isOpen,
@@ -47,11 +47,7 @@ export const Drawer: React.FC<DrawerProps> = ({
 
   // ドロワーが開いているときはbodyのスクロールを無効化
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    document.body.style.overflow = isOpen ? 'hidden' : '';
 
     return () => {
       document.body.style.overflow = '';
@@ -73,13 +69,13 @@ export const Drawer: React.FC<DrawerProps> = ({
     <div
       className={`${styles.overlay} ${isOpen ? styles.overlayOpen : ''}`}
       onClick={handleOverlayClick}
-      aria-hidden="true"
+      aria-hidden='true'
     >
       <div
         ref={drawerRef}
         className={`${styles.drawer} ${styles[position]} ${isOpen ? styles.drawerOpen : ''}`}
-        role="dialog"
-        aria-modal="true"
+        role='dialog'
+        aria-modal='true'
         aria-label={title}
       >
         <div className={styles.header}>
@@ -87,23 +83,23 @@ export const Drawer: React.FC<DrawerProps> = ({
             ref={closeButtonRef}
             className={styles.closeButton}
             onClick={onClose}
-            aria-label="閉じる"
-            type="button"
+            aria-label='閉じる'
+            type='button'
           >
             <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
+              width='24'
+              height='24'
+              viewBox='0 0 24 24'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+              aria-hidden='true'
             >
               <path
-                d="M18 6L6 18M6 6L18 18"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+                d='M18 6L6 18M6 6L18 18'
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
               />
             </svg>
           </button>

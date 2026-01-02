@@ -1,23 +1,23 @@
 import React from 'react';
 import styles from './Breadcrumb.module.css';
 
-export interface BreadcrumbItem {
+export type BreadcrumbItem = {
   /** パンくずアイテムのラベル */
   label: string;
   /** リンク先のURL（最後のアイテムの場合は不要） */
   href?: string;
-}
+};
 
-export interface BreadcrumbProps {
+export type BreadcrumbProps = {
   /** パンくずリストのアイテム配列 */
   items: BreadcrumbItem[];
   /** モバイルでの表示方式 */
   mobileDisplay?: 'wrap' | 'scroll';
   /** カスタムクラス名 */
   className?: string;
-  /** aria-label（ナビゲーションのラベル） */
+  /** Aria-label（ナビゲーションのラベル） */
   ariaLabel?: string;
-}
+};
 
 export const Breadcrumb: React.FC<BreadcrumbProps> = ({
   items,
@@ -43,15 +43,17 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
           return (
             <li key={index} className={styles.item}>
               {!isFirst && (
-                <span className={styles.separator} aria-hidden="true">
+                <span className={styles.separator} aria-hidden='true'>
                   /
                 </span>
               )}
-              {isLast ? (
-                <span className={styles.current} aria-current="page">
+              {isLast
+? (
+                <span className={styles.current} aria-current='page'>
                   {item.label}
                 </span>
-              ) : (
+              )
+: (
                 <a href={item.href} className={styles.link}>
                   {item.label}
                 </a>

@@ -29,7 +29,7 @@ function BoardComponent() {
 			try {
 				const response = await apiClient.api.boards[':boardKey'].$get({
 					param: {boardKey},
-				})
+				});
 
 				if (!response.ok) {
 					if (response.status === 404) {
@@ -63,18 +63,18 @@ function BoardComponent() {
 		// スレッド作成後、1ページ目に戻してリロード
 		setCurrentPage(1);
 		void fetchThreads();
-	}
+	};
 
 	async function fetchThreads() {
 		setIsLoading(true);
 		try {
-			const response = await apiClient.api.boards[':boardKey']['threads'].$get({
+			const response = await apiClient.api.boards[':boardKey'].threads.$get({
 				param: {boardKey},
 				query: {
 					page: currentPage.toString(),
 					limit: '50',
 				},
-			})
+			});
 
 			if (!response.ok) {
 				throw new Error('スレッド一覧の取得に失敗しました');
@@ -105,11 +105,11 @@ function BoardComponent() {
 							/>
 							<h2 style={{marginTop: '1rem'}}>{board.title}</h2>
 							{board.description && <p>{board.description}</p>}
-							
+
 							<div style={{marginTop: '1rem'}}>
 								<Button
 									onClick={() => {
-										setIsCreateModalOpen(true)
+										setIsCreateModalOpen(true);
 									}}
 									disabled={board.isReadOnly}
 								>
@@ -121,14 +121,18 @@ function BoardComponent() {
 									</p>
 								)}
 							</div>
-							
+
 							<hr style={{margin: '2rem 0'}} />
-							
-							{isLoading ? (
+
+							{isLoading
+							? (
 								<p>読込中...</p>
-							) : threads.length === 0 ? (
-								<p>スレッドがありません</p>
-							) : (
+							)
+							: (threads.length === 0
+								? (
+									<p>スレッドがありません</p>
+								)
+								: (
 								<>
 									<h3>スレッド一覧</h3>
 									<div style={{listStyle: 'none', padding: 0}}>
@@ -141,7 +145,9 @@ function BoardComponent() {
 													marginBottom: '1rem',
 												}}
 											>
-												<div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem'}}>
+												<div style={{
+													display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem',
+												}}>
 												<div>
 													<Link
 														to='/board/$boardKey/thread/$threadId'
@@ -249,9 +255,11 @@ function BoardComponent() {
 											</div>
 										))}
 									</div>
-									
+
 									{pagination && pagination.totalPages > 1 && (
-										<div style={{marginTop: '2rem', display: 'flex', gap: '0.5rem', justifyContent: 'center', alignItems: 'center'}}>
+										<div style={{
+											marginTop: '2rem', display: 'flex', gap: '0.5rem', justifyContent: 'center', alignItems: 'center',
+										}}>
 											<button
 												onClick={() => {
 													setCurrentPage(p => Math.max(1, p - 1));
@@ -276,7 +284,7 @@ function BoardComponent() {
 										</div>
 									)}
 								</>
-							)}
+							))}
 						</>
 					)}
 				</div>
@@ -291,5 +299,5 @@ function BoardComponent() {
 				boardKey={boardKey}
 			/>
 		</>
-	)
+	);
 }

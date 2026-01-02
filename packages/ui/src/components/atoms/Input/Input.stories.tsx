@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Input } from './Input';
+import type {Meta, StoryObj} from '@storybook/react';
+import {Input} from './Input.js';
 
 const meta: Meta<typeof Input> = {
   title: 'Atoms/Input',
@@ -199,35 +199,37 @@ export const FullWidth: Story = {
 // 実際のフォーム例
 export const FormExample: Story = {
   render: () => (
-    <div style={{ maxWidth: '600px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+    <div style={{
+ maxWidth: '600px', display: 'flex', flexDirection: 'column', gap: '24px',
+}}>
       <Input
-        label="氏名"
+        label='氏名'
         required
-        supportText="氏と名を空白で区切ってください。"
-        placeholder="例: 山田 太郎"
+        supportText='氏と名を空白で区切ってください。'
+        placeholder='例: 山田 太郎'
         fullWidth
       />
       <Input
-        label="氏名（カタカナ）"
+        label='氏名（カタカナ）'
         required
-        supportText="氏（カタカナ）と名（カタカナ）を空白で区切ってください。"
-        placeholder="例: ヤマダ タロウ"
+        supportText='氏（カタカナ）と名（カタカナ）を空白で区切ってください。'
+        placeholder='例: ヤマダ タロウ'
         fullWidth
       />
       <Input
-        label="メールアドレス"
+        label='メールアドレス'
         required
-        type="email"
-        autoComplete="email"
-        supportText="ログインに使用するメールアドレスを入力してください。"
+        type='email'
+        autoComplete='email'
+        supportText='ログインに使用するメールアドレスを入力してください。'
         fullWidth
       />
       <Input
-        label="電話番号"
-        type="tel"
-        autoComplete="tel"
-        supportText="ハイフンを含めて入力してください。"
-        placeholder="03-1234-5678"
+        label='電話番号'
+        type='tel'
+        autoComplete='tel'
+        supportText='ハイフンを含めて入力してください。'
+        placeholder='03-1234-5678'
         fullWidth
       />
     </div>

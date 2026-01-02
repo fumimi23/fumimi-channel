@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { TextArea } from './TextArea';
+import type {Meta, StoryObj} from '@storybook/react';
+import {TextArea} from './TextArea.js';
 
 const meta: Meta<typeof TextArea> = {
   title: 'Atoms/TextArea',
@@ -228,26 +228,28 @@ export const FullWidth: Story = {
 // 実際のフォーム例
 export const FormExample: Story = {
   render: () => (
-    <div style={{ maxWidth: '600px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+    <div style={{
+ maxWidth: '600px', display: 'flex', flexDirection: 'column', gap: '24px',
+}}>
       <TextArea
-        label="どの機能に問題がありましたか？"
+        label='どの機能に問題がありましたか？'
         required
-        supportText="該当する機能を選択してください。（この例では省略）"
+        supportText='該当する機能を選択してください。（この例では省略）'
         rows={2}
         fullWidth
       />
       <TextArea
-        label="詳しい状況を教えてください"
+        label='詳しい状況を教えてください'
         required
-        supportText="できるだけ詳しくお書きください。"
+        supportText='できるだけ詳しくお書きください。'
         maxLength={200}
         showCount
         rows={5}
         fullWidth
       />
       <TextArea
-        label="その他のご意見（任意）"
-        supportText="追加でお伝えしたいことがあればご記入ください。"
+        label='その他のご意見（任意）'
+        supportText='追加でお伝えしたいことがあればご記入ください。'
         rows={4}
         fullWidth
       />
