@@ -49,6 +49,226 @@ export type TextAreaProps = {
 	className?: string;
 };
 
+const buildClassNames = (
+	baseClasses: string[],
+	additionalClassName?: string,
+): string => [
+	...baseClasses,
+	additionalClassName,
+]
+	.filter(Boolean)
+	.join(' ');
+
+const getRequirementLabel = (readOnly: boolean, required: boolean): string | undefined => {
+	if (readOnly) {
+return '編集不可';
+}
+
+	if (required) {
+return '※必須';
+}
+
+	return undefined;
+};
+
+const getCounterText = (
+	showCount: boolean,
+	maxLength: number | undefined,
+	currentLength: number,
+	isOverLimit: boolean,
+): string | undefined => {
+	if (!showCount && !maxLength) {
+return undefined;
+}
+
+	if (maxLength) {
+		if (isOverLimit) {
+			const overCount = currentLength - maxLength;
+			return `${maxLength}文字まで（${overCount}文字オーバー）`;
+		}
+
+		return `${currentLength}/${maxLength}`;
+	}
+
+	if (showCount) {
+		return `${currentLength}文字`;
+	}
+
+	return undefined;
+};
+
+const RequirementLabel: React.FC<{
+	label: string;
+	readOnly: boolean;
+	required: boolean;
+}> = ({label, readOnly, required}) => (
+	<span
+		className={buildClassNames([
+			formControlStyles.requirementLabel ?? '',
+			readOnly ? formControlStyles.requirementLabelReadOnly ?? '' : '',
+			required ? formControlStyles.requirementLabelRequired ?? '' : '',
+		])}
+	>
+		{label}
+	</span>
+);
+
+const SupportText: React.FC<{id: string; text: string}> = ({id, text}) => (
+	<div id={id} className={formControlStyles.supportText}>
+		{text}
+	</div>
+);
+
+const ErrorText: React.FC<{id: string; errors: string[]}> = ({id, errors}) => (
+	<div id={id} className={formControlStyles.errorText} role='alert'>
+		{errors.map((error, index) => (
+			<div key={index} className={formControlStyles.errorTextItem}>
+				{error}
+			</div>
+		))}
+	</div>
+);
+
+const Counter: React.FC<{text: string; isError: boolean}> = ({text, isError}) => (
+	<div className={buildClassNames([styles.counter ?? '', isError ? styles.counterError ?? '' : ''])}>
+		{text}
+	</div>
+);
+
+const ReadOnlyTextArea: React.FC<{
+	id: string;
+	className: string;
+	value?: string;
+	defaultValue?: string;
+}> = ({id, className, value, defaultValue}) => (
+	<p id={id} className={className}>
+		{value ?? defaultValue ?? ''}
+	</p>
+);
+
+const EditableTextArea: React.FC<{
+	id: string;
+	name?: string;
+	className: string;
+	placeholder?: string;
+	value?: string;
+	defaultValue?: string;
+	onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+	onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
+	onFocus?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
+	required: boolean;
+	rows: number;
+	maxLength?: number;
+	disabled: boolean;
+	hasError: boolean;
+	describedByIds: string;
+}> = ({
+	id,
+	name,
+	className,
+	placeholder,
+	value,
+	defaultValue,
+	onChange,
+	onBlur,
+	onFocus,
+	required,
+	rows,
+	maxLength,
+	disabled,
+	hasError,
+	describedByIds,
+}) => (
+	<textarea
+		id={id}
+		name={name}
+		className={className}
+		placeholder={placeholder}
+		value={value}
+		defaultValue={defaultValue}
+		onChange={onChange}
+		onBlur={onBlur}
+		onFocus={onFocus}
+		readOnly={false}
+		required={required}
+		rows={rows}
+		maxLength={maxLength}
+		disabled={disabled}
+		aria-invalid={hasError}
+		aria-describedby={describedByIds || undefined}
+		aria-required={required}
+	/>
+);
+
+const LabelSection: React.FC<{
+	textareaId: string;
+	label: string;
+	displayRequirementLabel?: string;
+	readOnly: boolean;
+	required: boolean;
+}> = ({textareaId, label, displayRequirementLabel, readOnly, required}) => (
+	<div className={formControlStyles.labelWrapper}>
+		<label htmlFor={textareaId} className={formControlStyles.label}>
+			{label}
+		</label>
+		{displayRequirementLabel && (
+			<RequirementLabel
+				label={displayRequirementLabel}
+				readOnly={readOnly}
+				required={required}
+			/>
+		)}
+	</div>
+);
+
+const buildTextAreaClassName = (options: {
+	size: 'sm' | 'md' | 'lg';
+	resize: 'none' | 'vertical' | 'horizontal' | 'both';
+	hasError: boolean;
+	readOnly: boolean;
+	fullWidth: boolean;
+	className?: string;
+}): string => buildClassNames(
+	[
+		styles.textarea ?? '',
+		styles[options.size] ?? '',
+		styles[`resize-${options.resize}`] ?? '',
+		options.hasError ? styles.error ?? '' : '',
+		options.readOnly ? styles.readOnly ?? '' : '',
+		options.fullWidth ? styles.fullWidth ?? '' : '',
+	],
+	options.className,
+);
+
+const buildReadOnlyClassName = (
+	size: 'sm' | 'md' | 'lg',
+	className?: string,
+): string => buildClassNames(
+	[
+		formControlStyles.readOnlyText ?? '',
+		formControlStyles[size] ?? '',
+		formControlStyles.fullWidth ?? '',
+	],
+	className,
+);
+
+const buildContainerClassName = (fullWidth: boolean): string => buildClassNames([
+	formControlStyles.container ?? '',
+	fullWidth ? formControlStyles.containerFullWidth ?? '' : '',
+]);
+
+const buildDescribedByIds = (options: {
+	supportText: string | undefined;
+	supportTextId: string;
+	hasError: boolean;
+	errorTextId: string;
+	ariaDescribedby: string | undefined;
+}): string => buildClassNames([
+	options.supportText ? options.supportTextId : '',
+	options.hasError ? options.errorTextId : '',
+	options.ariaDescribedby ?? '',
+]);
+
 export const TextArea: React.FC<TextAreaProps> = ({
 	label,
 	supportText,
@@ -73,148 +293,80 @@ export const TextArea: React.FC<TextAreaProps> = ({
 	'aria-describedby': ariaDescribedby,
 	className,
 }) => {
-	// エラーの有無を判定
-	const hasError = errorText && errorText.length > 0;
-
-	// ユニークIDの生成
+	const hasError = Boolean(errorText && errorText.length > 0);
 	const textareaId = id ?? `textarea-${React.useId()}`;
 	const supportTextId = `${textareaId}-support`;
 	const errorTextId = `${textareaId}-error`;
 
-	// Aria-describedby の構築
-	const describedByIds = [
-		supportText ? supportTextId : '',
-		hasError ? errorTextId : '',
-		ariaDescribedby ?? '',
-	]
-		.filter(Boolean)
-		.join(' ');
+	const describedByIds = buildDescribedByIds({
+		supportText,
+		supportTextId,
+		hasError,
+		errorTextId,
+		ariaDescribedby,
+	});
 
-	// テキストエリアのクラス名を構築
-	const textareaClassName = [
-		styles.textarea,
-		styles[size],
-		styles[`resize-${resize}`],
-		hasError ? styles.error : '',
-		readOnly ? styles.readOnly : '',
-		fullWidth ? styles.fullWidth : '',
+	const textareaClassName = buildTextAreaClassName({
+		size,
+		resize,
+		hasError,
+		readOnly,
+		fullWidth,
 		className,
-	]
-		.filter(Boolean)
-		.join(' ');
+	});
 
-	// 編集不可テキストのクラス名を構築
-	const readOnlyTextClassName = [
-		formControlStyles.readOnlyText,
-		formControlStyles[size],
-		formControlStyles.fullWidth,
-		className,
-	]
-		.filter(Boolean)
-		.join(' ');
+	const readOnlyTextClassName = buildReadOnlyClassName(size, className);
+	const displayRequirementLabel = getRequirementLabel(readOnly, required);
+	const containerClassName = buildContainerClassName(fullWidth);
 
-	// 要否ラベルを自動設定
-	const displayRequirementLabel = readOnly ? '編集不可' : (required ? '※必須' : undefined);
-
-	// 現在の文字数を計算
 	const currentLength = (value ?? defaultValue ?? '').length;
 	const isOverLimit = maxLength ? currentLength > maxLength : false;
-
-	// 文字数カウンターテキスト
-	const getCounterText = () => {
-		if (!showCount && !maxLength) {
-			return null;
-		}
-
-		if (maxLength) {
-			if (isOverLimit) {
-				const overCount = currentLength - maxLength;
-				return `${maxLength}文字まで（${overCount}文字オーバー）`;
-			}
-
-			return `${currentLength}/${maxLength}`;
-		}
-
-		if (showCount) {
-			return `${currentLength}文字`;
-		}
-
-		return null;
-	};
-
-	const counterText = getCounterText();
+	const counterText = getCounterText(showCount, maxLength, currentLength, isOverLimit);
 
 	return (
-		<div className={`${formControlStyles.container} ${fullWidth ? formControlStyles.containerFullWidth : ''}`}>
-			{/* 項目ラベルと要否ラベル */}
-			<div className={formControlStyles.labelWrapper}>
-				<label htmlFor={textareaId} className={formControlStyles.label}>
-					{label}
-				</label>
-				{displayRequirementLabel && (
-					<span
-						className={`${formControlStyles.requirementLabel} ${
-							readOnly ? formControlStyles.requirementLabelReadOnly : ''
-						} ${required ? formControlStyles.requirementLabelRequired : ''}`}
-					>
-						{displayRequirementLabel}
-					</span>
-				)}
-			</div>
+		<div className={containerClassName}>
+			<LabelSection
+				textareaId={textareaId}
+				label={label}
+				displayRequirementLabel={displayRequirementLabel}
+				readOnly={readOnly}
+				required={required}
+			/>
 
-			{/* サポートテキスト */}
-			{supportText && (
-				<div id={supportTextId} className={formControlStyles.supportText}>
-					{supportText}
-				</div>
-			)}
+			{supportText && <SupportText id={supportTextId} text={supportText} />}
 
-			{/* 入力フィールド - 編集不可の場合はpタグで表示 */}
 			{readOnly
-				? (
-					<p id={textareaId} className={readOnlyTextClassName}>
-						{value ?? defaultValue ?? ''}
-					</p>
-				)
-				: (
-					<textarea
-						id={textareaId}
-						name={name}
-						className={textareaClassName}
-						placeholder={placeholder}
-						value={value}
-						defaultValue={defaultValue}
-						onChange={onChange}
-						onBlur={onBlur}
-						onFocus={onFocus}
-						readOnly={false}
-						required={required}
-						rows={rows}
-						maxLength={maxLength}
-						disabled={disabled}
-						aria-invalid={hasError}
-						aria-describedby={describedByIds || undefined}
-						aria-required={required}
-					/>
-				)}
-
-			{/* 文字数カウンター */}
-			{!readOnly && counterText && (
-				<div className={`${styles.counter} ${isOverLimit ? styles.counterError : ''}`}>
-					{counterText}
-				</div>
+? (
+				<ReadOnlyTextArea
+					id={textareaId}
+					className={readOnlyTextClassName}
+					value={value}
+					defaultValue={defaultValue}
+				/>
+			)
+: (
+				<EditableTextArea
+					id={textareaId}
+					name={name}
+					className={textareaClassName}
+					placeholder={placeholder}
+					value={value}
+					defaultValue={defaultValue}
+					onChange={onChange}
+					onBlur={onBlur}
+					onFocus={onFocus}
+					required={required}
+					rows={rows}
+					maxLength={maxLength}
+					disabled={disabled}
+					hasError={hasError}
+					describedByIds={describedByIds}
+				/>
 			)}
 
-			{/* エラーテキスト */}
-			{hasError && (
-				<div id={errorTextId} className={formControlStyles.errorText} role='alert'>
-					{errorText.map((error, index) => (
-						<div key={index} className={formControlStyles.errorTextItem}>
-							{error}
-						</div>
-					))}
-				</div>
-			)}
+			{!readOnly && counterText && <Counter text={counterText} isError={isOverLimit} />}
+
+			{hasError && <ErrorText id={errorTextId} errors={errorText ?? []} />}
 		</div>
 	);
 };
