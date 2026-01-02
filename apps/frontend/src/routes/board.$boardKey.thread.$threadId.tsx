@@ -42,8 +42,8 @@ continue;
 					textDecoration: 'none',
 					fontWeight: 500,
 				}}
-				onClick={e => {
-					e.preventDefault();
+				onClick={event => {
+					event.preventDefault();
 					const element = document.getElementById(postNumber);
 					if (element) {
 						element.scrollIntoView({behavior: 'smooth', block: 'start'});

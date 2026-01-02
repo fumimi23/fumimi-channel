@@ -381,11 +381,11 @@ export const MobileMenu: Story = {
                     fontSize: '1rem',
                     borderRadius: 'var(--radius-base)',
                   }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.backgroundColor = 'var(--surface-hover)';
+                  onMouseEnter={event => {
+                    event.currentTarget.style.backgroundColor = 'var(--surface-hover)';
                   }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.backgroundColor = 'transparent';
+                  onMouseLeave={event => {
+                    event.currentTarget.style.backgroundColor = 'transparent';
                   }}
                 >
                   トップページ
@@ -402,11 +402,11 @@ export const MobileMenu: Story = {
                     fontSize: '1rem',
                     borderRadius: 'var(--radius-base)',
                   }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.backgroundColor = 'var(--surface-hover)';
+                  onMouseEnter={event => {
+                    event.currentTarget.style.backgroundColor = 'var(--surface-hover)';
                   }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.backgroundColor = 'transparent';
+                  onMouseLeave={event => {
+                    event.currentTarget.style.backgroundColor = 'transparent';
                   }}
                 >
                   デジタル庁について
@@ -423,11 +423,11 @@ export const MobileMenu: Story = {
                     fontSize: '1rem',
                     borderRadius: 'var(--radius-base)',
                   }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.backgroundColor = 'var(--surface-hover)';
+                  onMouseEnter={event => {
+                    event.currentTarget.style.backgroundColor = 'var(--surface-hover)';
                   }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.backgroundColor = 'transparent';
+                  onMouseLeave={event => {
+                    event.currentTarget.style.backgroundColor = 'transparent';
                   }}
                 >
                   政策・取組
@@ -444,11 +444,11 @@ export const MobileMenu: Story = {
                     fontSize: '1rem',
                     borderRadius: 'var(--radius-base)',
                   }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.backgroundColor = 'var(--surface-hover)';
+                  onMouseEnter={event => {
+                    event.currentTarget.style.backgroundColor = 'var(--surface-hover)';
                   }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.backgroundColor = 'transparent';
+                  onMouseLeave={event => {
+                    event.currentTarget.style.backgroundColor = 'transparent';
                   }}
                 >
                   お知らせ
@@ -465,11 +465,11 @@ export const MobileMenu: Story = {
                     fontSize: '1rem',
                     borderRadius: 'var(--radius-base)',
                   }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.backgroundColor = 'var(--surface-hover)';
+                  onMouseEnter={event => {
+                    event.currentTarget.style.backgroundColor = 'var(--surface-hover)';
                   }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.backgroundColor = 'transparent';
+                  onMouseLeave={event => {
+                    event.currentTarget.style.backgroundColor = 'transparent';
                   }}
                 >
                   採用情報
