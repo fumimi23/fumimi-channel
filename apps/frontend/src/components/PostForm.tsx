@@ -15,7 +15,7 @@ export type PostFormHandle = {
 	addQuote: (postNumber: number) => void;
 };
 
-export const PostForm = forwardRef<PostFormHandle, PostFormProps>(function PostForm({boardKey, threadId, onPostCreated}, ref) {
+export const PostForm = forwardRef<PostFormHandle, PostFormProps>(({boardKey, threadId, onPostCreated}, ref) => {
 	const [name, setName] = useState('');
 	const [body, setBody] = useState('');
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -113,3 +113,5 @@ export const PostForm = forwardRef<PostFormHandle, PostFormProps>(function PostF
 		</div>
 	);
 });
+
+PostForm.displayName = 'PostForm';
