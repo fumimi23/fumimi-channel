@@ -119,11 +119,13 @@ function ThreadComponent() {
 										{posts.map(post => (
 											<article
 												key={post.id}
+												id={`${post.number}`}
 												style={{
 													border: '1px solid #e0e0e0',
 													borderRadius: '8px',
 													padding: '1rem',
 													backgroundColor: 'var(--color-bg-secondary, #fafafa)',
+													scrollMarginTop: '1rem',
 												}}
 											>
 												<div
