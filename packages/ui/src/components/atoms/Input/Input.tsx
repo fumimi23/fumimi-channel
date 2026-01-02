@@ -74,7 +74,7 @@ export const Input: React.FC<InputProps> = ({
 	const hasError = errorText && errorText.length > 0;
 
 	// ユニークIDの生成
-	const inputId = id || `input-${React.useId()}`;
+	const inputId = id ?? `input-${React.useId()}`;
 	const supportTextId = `${inputId}-support`;
 	const errorTextId = `${inputId}-error`;
 
@@ -82,7 +82,7 @@ export const Input: React.FC<InputProps> = ({
 	const describedByIds = [
 		supportText ? supportTextId : '',
 		hasError ? errorTextId : '',
-		ariaDescribedby || '',
+		ariaDescribedby ?? '',
 	]
 		.filter(Boolean)
 		.join(' ');
@@ -140,7 +140,7 @@ export const Input: React.FC<InputProps> = ({
 			{readOnly
 				? (
 					<p id={inputId} className={readOnlyTextClassName}>
-						{value || defaultValue || ''}
+						{value ?? defaultValue ?? ''}
 					</p>
 				)
 				: (

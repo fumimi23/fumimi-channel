@@ -77,7 +77,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
 	const hasError = errorText && errorText.length > 0;
 
 	// ユニークIDの生成
-	const textareaId = id || `textarea-${React.useId()}`;
+	const textareaId = id ?? `textarea-${React.useId()}`;
 	const supportTextId = `${textareaId}-support`;
 	const errorTextId = `${textareaId}-error`;
 
@@ -85,7 +85,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
 	const describedByIds = [
 		supportText ? supportTextId : '',
 		hasError ? errorTextId : '',
-		ariaDescribedby || '',
+		ariaDescribedby ?? '',
 	]
 		.filter(Boolean)
 		.join(' ');
@@ -117,7 +117,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
 	const displayRequirementLabel = readOnly ? '編集不可' : (required ? '※必須' : undefined);
 
 	// 現在の文字数を計算
-	const currentLength = (value || defaultValue || '').length;
+	const currentLength = (value ?? defaultValue ?? '').length;
 	const isOverLimit = maxLength ? currentLength > maxLength : false;
 
 	// 文字数カウンターテキスト
@@ -173,7 +173,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
 			{readOnly
 				? (
 					<p id={textareaId} className={readOnlyTextClassName}>
-						{value || defaultValue || ''}
+						{value ?? defaultValue ?? ''}
 					</p>
 				)
 				: (
