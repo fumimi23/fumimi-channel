@@ -73,7 +73,6 @@ function BoardComponent() {
 				query: {
 					page: currentPage.toString(),
 					limit: '50',
-					status: 'OPEN',
 				},
 			})
 
