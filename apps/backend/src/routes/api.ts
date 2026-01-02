@@ -167,7 +167,7 @@ export const apiRouter = new Hono()
 			}
 
 			// Statusが指定されていない場合はOPENとCLOSEDを取得（ARCHIVEDは除外）
-			const statusFilter = status ? status : {in: ['OPEN', 'CLOSED'] as const} as {in: Array<'OPEN' | 'CLOSED'>};
+			const statusFilter = status ?? {in: ['OPEN', 'CLOSED'] as Array<'OPEN' | 'CLOSED'>};
 
 			// スレッド一覧を取得
 			const [threads, total] = await Promise.all([
@@ -187,6 +187,18 @@ export const apiRouter = new Hono()
 								posts: true,
 							},
 						},
+						posts: {
+							select: {
+								id: true,
+								body: true,
+								name: true,
+								ipAddress: true,
+								createdAt: true,
+							},
+							orderBy: {
+								createdAt: 'asc',
+							},
+						},
 					},
 					orderBy: {
 						updatedAt: 'desc', // Bump順 (最新更新順)
@@ -203,14 +215,41 @@ export const apiRouter = new Hono()
 			]);
 
 			return c.json({
-				threads: threads.map(thread => ({
-					id: thread.id,
-					title: thread.title,
-					status: thread.status,
-					postCount: thread._count.posts,
-					createdAt: toIsoString(thread.createdAt),
-					updatedAt: toIsoString(thread.updatedAt),
-				})),
+				threads: threads.map(thread => {
+					// 最初の投稿（OP）
+					const firstPost = thread.posts[0];
+					// 最新10件の投稿（最初の投稿を除く）
+					const recentPosts = thread.posts.length > 1
+						? thread.posts.slice(-10).filter(p => p.id !== firstPost?.id)
+						: [];
+
+					return {
+						id: thread.id,
+						title: thread.title,
+						status: thread.status,
+						postCount: thread._count.posts,
+						createdAt: toIsoString(thread.createdAt),
+						updatedAt: toIsoString(thread.updatedAt),
+						firstPost: firstPost
+							? {
+								id: firstPost.id,
+								number: 1,
+								content: firstPost.body,
+								name: firstPost.name ?? '名無しさん',
+								posterId: generatePosterId(firstPost.ipAddress, firstPost.createdAt),
+								createdAt: toIsoString(firstPost.createdAt),
+							}
+							: undefined,
+						recentPosts: recentPosts.map((post, index) => ({
+							id: post.id,
+							number: thread.posts.length - recentPosts.length + index + 1,
+							content: post.body,
+							name: post.name ?? '名無しさん',
+							posterId: generatePosterId(post.ipAddress, post.createdAt),
+							createdAt: toIsoString(post.createdAt),
+						})),
+					};
+				}),
 				pagination: {
 					page,
 					limit,
