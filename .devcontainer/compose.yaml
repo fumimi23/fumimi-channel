@@ -1,4 +1,26 @@
+volumes:
+  pg-data:
+  pgadmin-data:
+
 services:
+  db:
+    image: postgres:17.6
+    container_name: postgres
+    ports:
+      - ${DB_PORT:-5432}:${DB_PORT:-5432}
+    environment:
+      - TZ=UTC
+      - POSTGRES_DB=${DB_NAME:-db}
+      - POSTGRES_USER=${DB_USER:-postgres}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-postgres}
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   devcontainer:
     build: ./.devcontainer
     command: sleep infinity
@@ -14,3 +36,23 @@ services:
     depends_on:
       db:
         condition: service_healthy
+
+  pgadmin4:
+    image: dpage/pgadmin4
+    container_name: pgadmin4
+    ports:
+      - ${PGADMIN_PORT:-8080}:${PGADMIN_PORT:-80}
+    restart: always
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+      - ./compose/pgadmin.servers.json:/pgadmin4/servers.json
+      - ./compose/pgadmin.preferences.json:/pgadmin4/preferences.json
+    depends_on:
+      - db
+    environment:
+      - GUNICORN_ACCESS_LOGFILE=/dev/null
+      - PGADMIN_DEFAULT_EMAIL=user@example.com
+      - PGADMIN_DEFAULT_PASSWORD=password
+      - PGADMIN_CONFIG_SERVER_MODE=False
+      - PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED=False
+      - PGADMIN_PREFERENCES_JSON_FILE=/pgadmin4/preferences.json
