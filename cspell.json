@@ -16,6 +16,9 @@
     "samverschueren",
     "sbdocs",
     "Timestamptz",
+    "vite",
+    "vitejs",
+    "vitest",
     "WCAG"
   ]
 }
